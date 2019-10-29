@@ -9,10 +9,18 @@ const proScreens = ['Woman', 'Man', 'Kids', 'New Collection', 'Sign In', 'Sign U
 
 class DrawerItem extends React.Component {
   renderIcon = () => {
-    const { title, focused } = this.props;
+    const { title, focused, screen } = this.props;
 
-    switch (title) {
+    switch (screen) {
       case 'Home':
+        return (
+          <Icon
+            size={16}
+            name="home"
+            family="entypo"
+            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
+        );
+      case 'Companies':
         return (
           <Icon
             size={16}
@@ -20,76 +28,44 @@ class DrawerItem extends React.Component {
             family="GalioExtra"
             color={focused ? 'white' : materialTheme.COLORS.MUTED} />
         );
-      case 'Woman':
+      case 'Tourism':
         return (
           <Icon
             size={16}
-            name="md-woman"
-            family="ionicon"
-            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
-        );
-      case 'Man':
-        return (
-          <Icon
-            size={16}
-            name="man"
+            name="aircraft"
             family="entypo"
             color={focused ? 'white' : materialTheme.COLORS.MUTED} />
         );
-      case 'Kids':
+      case 'Routes':
         return (
           <Icon
             size={16}
-            name="baby"
-            family="GalioExtra"
-            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
-        );
-      case 'New Collection':
-        return (
-          <Icon
-            size={16}
-            name="grid-on"
-            family="material"
+            name="shuffle"
+            family="entypo"
             color={focused ? 'white' : materialTheme.COLORS.MUTED} />
         );
       case 'Profile':
         return (
           <Icon
             size={16}
-            name="circle-10"
-            family="GalioExtra"
+            name="user"
+            family="entypo"
+            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
+        );
+      case 'Logout':
+        return (
+          <Icon
+            size={16}
+            name="log-out"
+            family="entypo"
             color={focused ? 'white' : materialTheme.COLORS.MUTED} />
         );
       case 'Settings':
         return (
           <Icon
             size={16}
-            name="gears"
-            family="font-awesome"
-            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
-        );
-      case 'Components':
-        return (
-          <Icon
-            size={16}
-            name="md-switch"
-            family="ionicon"
-            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
-        );
-      case 'Sign In':
-        return (
-          <Icon
-            size={16}
-            name="ios-log-in"
-            family="ionicon"
-            color={focused ? 'white' : materialTheme.COLORS.MUTED} />
-        );
-      case 'Sign Up':
-        return (
-          <Icon
-            size={16}
-            name="md-person-add"
-            family="ionicon"
+            name="cog"
+            family="entypo"
             color={focused ? 'white' : materialTheme.COLORS.MUTED} />
         );
       default:

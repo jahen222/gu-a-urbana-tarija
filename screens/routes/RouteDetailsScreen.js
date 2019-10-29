@@ -10,7 +10,7 @@ import { HeaderHeight } from "../../constants/utils";
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default class CompanyDetail extends React.Component {
+export default class RouteDetail extends React.Component {
   render() {
     return (
       <Block flex style={styles.profile}>

@@ -3,11 +3,18 @@ import { Easing, Animated, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Block, Text, theme } from "galio-framework";
-import HomeScreen from '../screens/Home';
-import CompanyDetailsScreen from '../screens/companies/CompanyDetailsScreen';
+//Components
 import Header from '../components/Header';
-import Menu from './Menu';
 import { Drawer } from '../components/';
+import Menu from './Menu';
+//Screens
+import HomeScreen from '../screens/Home';
+import CompaniesScreen from '../screens/companies/CompaniesScreen';
+import CompanyDetailsScreen from '../screens/companies/CompanyDetailsScreen';
+import RoutesScreen from '../screens/routes/RoutesScreen';
+import RouteDetailsScreen from '../screens/routes/RouteDetailsScreen';
+import TourismScreen from '../screens/tourism/TourismScreen';
+import TourismDetailsScreen from '../screens/tourism/TourismDetailsScreen';
 
 const transitionConfig = (transitionProps, prevTransitionProps) => ({
   transitionSpec: {
@@ -60,11 +67,59 @@ const HomeStack = createStackNavigator({
   transitionConfig,
 });
 
+const CompaniesStack = createStackNavigator({
+  Companies: {
+    screen: CompaniesScreen,
+    navigationOptions: ({navigation}) => ({
+      //header: <Header search tabs title="Home" navigation={navigation} />,
+      header: <Header search title="Empresas" navigation={navigation} />,
+    })
+  }
+},
+{
+  cardStyle: {
+    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
+  },
+  transitionConfig,
+});
+
+const RoutesStack = createStackNavigator({
+  Routes: {
+    screen: RoutesScreen,
+    navigationOptions: ({navigation}) => ({
+      //header: <Header search tabs title="Home" navigation={navigation} />,
+      header: <Header search title="Rutas" navigation={navigation} />,
+    })
+  }
+},
+{
+  cardStyle: {
+    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
+  },
+  transitionConfig,
+});
+
+const TourismStack = createStackNavigator({
+  Tourism: {
+    screen: TourismScreen,
+    navigationOptions: ({navigation}) => ({
+      //header: <Header search tabs title="Home" navigation={navigation} />,
+      header: <Header search title="Turismo" navigation={navigation} />,
+    })
+  }
+},
+{
+  cardStyle: {
+    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
+  },
+  transitionConfig,
+});
+
 const CompanyDetailsStack = createStackNavigator({
   CompanyDetails: {
     screen: CompanyDetailsScreen,
     navigationOptions: ({ navigation }) => ({
-      header: <Header white transparent title="Company Details" navigation={navigation} />,
+      header: <Header white transparent title="Detalles de empresa" navigation={navigation} />,
       headerTransparent: true,
     })
   },
@@ -83,35 +138,27 @@ const drawerNavigator = createDrawerNavigator(
         )
       }
     },
-    Routes: {
-      screen: HomeStack,
-      navigationOptions: (navOpt) => ({
-        drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Home" title="Rutas" />
-        ),
-      }),
-    },
     Companies: {
-      screen: HomeStack,
+      screen: CompaniesStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Home" title="Compañias" />
+          <Drawer focused={focused} screen="Companies" title="Compañias" />
         ),
       }),
     },
     Tourism: {
-      screen: HomeStack,
+      screen: TourismStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Home" title="Turismo" />
+          <Drawer focused={focused} screen="Tourism" title="Turismo" />
         ),
       }),
     },
-    CompanyDetails: {
-      screen: CompanyDetailsStack,
+    Routes: {
+      screen: RoutesStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="CompanyDetails" title="Company Details" />
+          <Drawer focused={focused} screen="Routes" title="Rutas" />
         ),
       }),
     },
@@ -121,11 +168,19 @@ const drawerNavigator = createDrawerNavigator(
         drawerLabel: () => <Block style={{marginVertical: 8}}><Text>{` `}</Text></Block>,
       },
     },
+    Profile: {
+      screen: HomeStack,
+      navigationOptions: (navOpt) => ({
+        drawerLabel: ({focused}) => (
+          <Drawer focused={focused} screen="Profile" title="Perfil" />
+        ),
+      }),
+    },
     Logout: {
       screen: HomeStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Home" title="Logout" />
+          <Drawer focused={focused} screen="Logout" title="Logout" />
         ),
       }),
     },
