@@ -29,7 +29,6 @@ export default class Tourism extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderProducts()}
       </Block>
     );
   }

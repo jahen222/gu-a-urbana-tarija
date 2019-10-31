@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-
-import { Icon } from '../../components';
+import Firebase, { storage } from '../../config/Firebase.js';
+import { Icon, Product, MapCompany } from '../../components';
 import { Images, materialTheme } from '../../constants';
 import { HeaderHeight } from "../../constants/utils";
 
@@ -11,31 +11,67 @@ const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
 export default class CompanyDetail extends React.Component {
+  state = {
+    address: "",
+    coordinates: {
+      lat: "",
+      long: "",
+    },
+    id: "",
+    image: "",
+    name: "",
+    phone: "",
+    workingHours: "",
+  };
+
+  getLink = async (image) => {
+    const refImage = storage.ref(image);
+
+    const getLink = await refImage.getDownloadURL()
+    .then(url => {
+      this.setState({
+        image: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+  };
+
+  componentDidMount = () => {
+    const { product } = this.props.navigation.state.params;
+
+    this.getLink(product.image);
+    this.setState({
+      address: product.address,
+      name: product.name,
+      phone: product.phone,
+      workingHours: product.workingHours,
+    });
+  };
+
   render() {
     return (
       <Block flex style={styles.profile}>
         <Block flex>
           <ImageBackground
-            source={{uri: Images.Profile}}
+            source={{uri: this.state.image}}
             style={styles.profileContainer}
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8 }}>{this.state.name}</Text>
                 <Block row space="between">
                   <Block row>
                     <Block middle style={styles.pro}>
-                      <Text size={16} color="white">Pro</Text>
+                      <Text size={16} color="white">Tel</Text>
                     </Block>
-                    <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
-                    <Text size={16} color={materialTheme.COLORS.WARNING}>
-                      4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
-                    </Text>
+                    <Text color="white" size={16} muted style={styles.seller}>{this.state.phone}</Text>
                   </Block>
                   <Block>
-                    <Text color={theme.COLORS.MUTED} size={16}>
+                    <Text color={theme.COLORS.MUTED} size={16} onPress={() => this.props.navigation.navigate('CompanyMap')} >
                       <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                      {` `} Los Angeles, CA
+                      {` `} {this.state.address}
                       </Text>
                   </Block>
                 </Block>
@@ -61,8 +97,24 @@ export default class CompanyDetail extends React.Component {
               </Block>
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16}>Recently viewed</Text>
-              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Home')}>View All</Text>
+              <Text size={16}>Ubicación</Text>
+              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('CompanyMap')}>Ver Mapa</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>Nombre Completo</Text>
+              <Text size={12}>{this.state.name}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>Dirección</Text>
+              <Text size={12}>{this.state.address}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>Teléfono</Text>
+              <Text size={12}>{this.state.phone}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>Horario</Text>
+              <Text size={12}>{this.state.workingHours}</Text>
             </Block>
             <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
               <Block row space="between" style={{ flexWrap: 'wrap' }} >

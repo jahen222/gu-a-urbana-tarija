@@ -24,40 +24,12 @@ class SignupScreen extends React.Component {
                     email: email
                 }
                 db.collection('users').doc(response.user.uid).set(user);
-                this.props.navigation.navigate('Main');
+                this.props.navigation.navigate('Drawer');
             }
         } catch (e) {
             alert(e);
         }
     };
-
-    /*render(){
-        return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                />
-                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-                    <Text style={styles.buttonText}>Signup</Text>
-                </TouchableOpacity>
-                <Button
-                    title="¿Ya estas registrado?, Entra"
-                    onPress={() => this.props.navigation.goBack()}
-                />
-            </View>
-        );
-    }*/
 
     render(){
         const { navigation } = this.props;

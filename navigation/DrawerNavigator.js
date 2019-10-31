@@ -11,10 +11,18 @@ import Menu from './Menu';
 import HomeScreen from '../screens/Home';
 import CompaniesScreen from '../screens/companies/CompaniesScreen';
 import CompanyDetailsScreen from '../screens/companies/CompanyDetailsScreen';
+import CompanyMapScreen from '../screens/companies/CompanyMapScreen';
 import RoutesScreen from '../screens/routes/RoutesScreen';
 import RouteDetailsScreen from '../screens/routes/RouteDetailsScreen';
 import TourismScreen from '../screens/tourism/TourismScreen';
 import TourismDetailsScreen from '../screens/tourism/TourismDetailsScreen';
+import LogoutScreen from '../screens/auth/LogoutScreen';
+
+class Hidden extends React.Component {
+  render() {
+    return null;
+  }
+}
 
 const transitionConfig = (transitionProps, prevTransitionProps) => ({
   transitionSpec: {
@@ -51,87 +59,80 @@ const transitionConfig = (transitionProps, prevTransitionProps) => ({
   }
 })
 
-const HomeStack = createStackNavigator({
+const ScreenStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: ({navigation}) => ({
-      //header: <Header search tabs title="Home" navigation={navigation} />,
       header: <Header search title="Home" navigation={navigation} />,
     })
-  }
-},
-{
-  cardStyle: {
-    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
   },
-  transitionConfig,
-});
-
-const CompaniesStack = createStackNavigator({
   Companies: {
     screen: CompaniesScreen,
     navigationOptions: ({navigation}) => ({
-      //header: <Header search tabs title="Home" navigation={navigation} />,
       header: <Header search title="Empresas" navigation={navigation} />,
     })
-  }
-},
-{
-  cardStyle: {
-    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
   },
-  transitionConfig,
-});
-
-const RoutesStack = createStackNavigator({
   Routes: {
     screen: RoutesScreen,
     navigationOptions: ({navigation}) => ({
-      //header: <Header search tabs title="Home" navigation={navigation} />,
       header: <Header search title="Rutas" navigation={navigation} />,
     })
-  }
-},
-{
-  cardStyle: {
-    backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
   },
-  transitionConfig,
-});
-
-const TourismStack = createStackNavigator({
   Tourism: {
     screen: TourismScreen,
     navigationOptions: ({navigation}) => ({
-      //header: <Header search tabs title="Home" navigation={navigation} />,
       header: <Header search title="Turismo" navigation={navigation} />,
     })
+  },
+  CompanyDetails: {
+    screen: CompanyDetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header white transparent title="Detalles Empresa" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  CompanyMap: {
+    screen: CompanyMapScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Mapa Empresa" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  RouteDetails: {
+    screen: RouteDetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header white transparent title="Detalles Ruta" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  TourismDetails: {
+    screen: TourismDetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header white transparent title="Detalles Turismo" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  Logout: {
+    screen: LogoutScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header white transparent title="Logout" navigation={navigation} />,
+    })
   }
+},
+{
+    initialRouteName: 'Companies'
 },
 {
   cardStyle: {
     backgroundColor: '#EEEEEE', //this is the backgroundColor for the app
   },
-  transitionConfig,
-});
-
-const CompanyDetailsStack = createStackNavigator({
-  CompanyDetails: {
-    screen: CompanyDetailsScreen,
-    navigationOptions: ({ navigation }) => ({
-      header: <Header white transparent title="Detalles de empresa" navigation={navigation} />,
-      headerTransparent: true,
-    })
-  },
-}, {
-  cardStyle: { backgroundColor: '#EEEEEE', },
   transitionConfig,
 });
 
 const drawerNavigator = createDrawerNavigator(
   {
     Home: {
-      screen: HomeStack,
+      screen: ScreenStack,
       navigationOptions: {
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Home" title="Home" />
@@ -139,7 +140,7 @@ const drawerNavigator = createDrawerNavigator(
       }
     },
     Companies: {
-      screen: CompaniesStack,
+      screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Companies" title="Compañias" />
@@ -147,7 +148,7 @@ const drawerNavigator = createDrawerNavigator(
       }),
     },
     Tourism: {
-      screen: TourismStack,
+      screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Tourism" title="Turismo" />
@@ -155,7 +156,7 @@ const drawerNavigator = createDrawerNavigator(
       }),
     },
     Routes: {
-      screen: RoutesStack,
+      screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Routes" title="Rutas" />
@@ -163,13 +164,13 @@ const drawerNavigator = createDrawerNavigator(
       }),
     },
     MenuDivider: {
-      screen: HomeStack,
+      screen: ScreenStack,
       navigationOptions: {
         drawerLabel: () => <Block style={{marginVertical: 8}}><Text>{` `}</Text></Block>,
       },
     },
     Profile: {
-      screen: HomeStack,
+      screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Profile" title="Perfil" />
@@ -177,12 +178,36 @@ const drawerNavigator = createDrawerNavigator(
       }),
     },
     Logout: {
-      screen: HomeStack,
+      screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
           <Drawer focused={focused} screen="Logout" title="Logout" />
         ),
       }),
+    },
+    CompanyDetails: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    CompanyMap: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    TourismDetails: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    RouteDetails: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
     },
   },
   Menu

@@ -3,10 +3,35 @@ import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 import { Icon, Product } from '../../components/';
 import products from '../../constants/products';
+import Firebase, { db, storage } from '../../config/Firebase.js';
 
 const { width } = Dimensions.get('screen');
 
 export default class Company extends React.Component {
+  state = { companies: [] };
+
+  componentDidMount = () => {
+    const allCompanies = db.collection('companies').get()
+    .then(querySnapshot => {
+      const companies = [];
+      querySnapshot.forEach(doc => {
+        companies.push({
+          id: doc.id,
+          name: doc.data().name,
+          address: doc.data().address,
+          coordinates: doc.data().coordinates,
+          image: doc.data().image,
+          //image: 'https://images.unsplash.com/photo-1542068829-1115f7259450?fit=crop&w=240&q=80',
+          phone: doc.data().phone,
+          workingHours: doc.data().workingHours,
+        });
+      });
+      this.setState({ companies });
+    })
+    .catch(e => {
+      alert(e);
+    });
+  };
 
   renderProducts = () => {
     return (
@@ -14,13 +39,11 @@ export default class Company extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <Product product={products[0]} horizontal />
-          <Block flex row>
-            <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Product product={products[2]} />
-          </Block>
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} full />
+          {this.state.companies.map(product => {
+            return (
+              <Product key={product.id} product={product} detail='company' horizontal />
+            );
+          })}
         </Block>
       </ScrollView>
     )

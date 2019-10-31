@@ -2,7 +2,6 @@ import React from "react";
 import { DrawerItems } from 'react-navigation-drawer';
 import { TouchableWithoutFeedback, ScrollView, StyleSheet, Dimensions, Image } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-
 import { Icon } from '../components/';
 import { Images, materialTheme } from "../constants/";
 
@@ -17,15 +16,6 @@ const Drawer = (props) => (
           <Text h5 color="white">{props.profile.name}</Text>
         </Block>
       </TouchableWithoutFeedback>
-      <Block row>
-        <Block middle style={styles.pro}>
-          <Text size={16} color="white">{props.profile.plan}</Text>
-        </Block>
-        <Text size={16} muted style={styles.seller}>{props.profile.type}</Text>
-        <Text size={16} color={materialTheme.COLORS.WARNING}>
-          {props.profile.rating} <Icon name="shape-star" family="GalioExtra" size={14} />
-        </Text>
-      </Block>
     </Block>
     <Block flex>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
@@ -37,14 +27,14 @@ const Drawer = (props) => (
 
 const profile = {
   avatar: Images.Profile,
-  name: 'Rachel Brown',
+  name: 'henryjaimes.peli@gmail.com',
   type: 'Seller',
   plan: 'Pro',
   rating: 4.8
 };
 
 const Menu = {
-  contentComponent: props => <Drawer {...props} profile={profile} />,
+  contentComponent: props => <Drawer {...props} profile={profile}/>,
   drawerBackgroundColor: 'white',
   drawerWidth: width * 0.8,
   contentOptions: {

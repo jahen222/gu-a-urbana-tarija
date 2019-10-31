@@ -14,52 +14,40 @@ class LoginScreen extends React.Component {
         password: ''
     };
 
-    handleLogin = async () => {
-        try {
-            const { email, password } = this.state;
-            const response = await Firebase.auth().signInWithEmailAndPassword(email, password);
-            this.getUser(response.user.uid);
-        } catch (e) {
-            alert(e);
-        }
+    componentDidMount = () => {
+        console.disableYellowBox = true;
+        Firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                if (this.getUser(user.uid) != null) {
+                    this.props.navigation.navigate('Drawer');
+                }
+            }
+        });
     };
 
     getUser = async (uid) => {
         try {
             const user = await db.collection('users').doc(uid).get();
-            this.props.navigation.navigate('Main');
+        } catch (e) {
+            alert(e);
+        }
+
+        return user;
+    };
+
+    handleLogin = async () => {
+        try {
+            const { email, password } = this.state;
+            const response = await Firebase.auth().signInWithEmailAndPassword(email, password);
+            if (response) {
+                if (this.getUser(response.user.uid) != null) {
+                    this.props.navigation.navigate('Drawer');
+                }
+            }
         } catch (e) {
             alert(e);
         }
     };
-
-    /*render(){
-        return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                />
-              <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <Button
-                    title="¿No tienes cuenta?, Registrare"
-                    onPress={() => this.props.navigation.navigate('Signup')}
-                />
-            </View>
-        );
-    }*/
 
     render(){
         const { navigation } = this.props;
@@ -70,7 +58,7 @@ class LoginScreen extends React.Component {
             <Block flex center>
               <ImageBackground
                 source={ Images.Onboarding }
-                style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
+                style={{ height: height, width: width, marginTop: '-45%', zIndex: 1 }}
               />
             </Block>
             <Block flex space="between" style={styles.padded}>
