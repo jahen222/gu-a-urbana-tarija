@@ -1,27 +1,35 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Button, Block, Text, Input, theme } from 'galio-framework';
-import MapView from 'react-native-maps';
+import { Dimensions, WebView } from 'react-native';
+import Firebase, { storage } from '../../config/Firebase.js';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
-export default class CompanyMap extends React.Component {
+class CompanyMap extends React.Component {
+
+  state = {
+    map: ""
+  };
+
+  componentDidMount = () => {
+    const { map } = this.props.navigation.state.params;
+
+    this.setState({
+      map: map
+    });
+  };
 
   render() {
+    const frame = '<iframe src="'+this.state.map+'&fullscreen=1" width="'+(width-3)+'" height="'+(height-98)+'"></iframe>';
     return (
-      <MapView style={{flex: 1}} showsUserLocation={true} region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+      <WebView
+         source={{html: frame}}
+         style={{
+           marginTop: -11,
+           marginLeft: -10
         }}
       />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  home: {
-    width: width,
-  },
-});
+export default CompanyMap;

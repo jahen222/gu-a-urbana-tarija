@@ -6,7 +6,7 @@ import Product from './Product';
 import Drawer from './Drawer';
 import Header from './Header';
 import Switch from './Switch';
-import MapCompany from './MapCompany';
+import Photo from './Photo';
 
 export {
   Button,
@@ -17,5 +17,5 @@ export {
   Drawer,
   Header,
   Switch,
-  MapCompany,
+  Photo
 };

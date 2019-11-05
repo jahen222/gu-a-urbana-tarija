@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-import Firebase, { storage } from '../../config/Firebase.js';
-import { Icon, Product, MapCompany } from '../../components';
+import Firebase, { db, storage } from '../../config/Firebase.js';
+import { Icon, Product, Photo } from '../../components';
 import { Images, materialTheme } from '../../constants';
 import { HeaderHeight } from "../../constants/utils";
 
@@ -13,21 +13,25 @@ const thumbMeasure = (width - 48 - 32) / 3;
 export default class CompanyDetail extends React.Component {
   state = {
     address: "",
-    coordinates: {
-      lat: "",
-      long: "",
-    },
     id: "",
     image: "",
     name: "",
     phone: "",
     workingHours: "",
+    map: "",
+    email: "",
+    facebook: "",
+    instagram: "",
+    twiteer: "",
+    web: "",
+    whatsapp: "",
+    review: "",
+    category: "",
   };
 
-  getLink = async (image) => {
-    const refImage = storage.ref(image);
-
-    const getLink = await refImage.getDownloadURL()
+  getLinks = async (product) => {
+    const refImage1 = storage.ref(product.image);
+    const getLink1 = await refImage1.getDownloadURL()
     .then(url => {
       this.setState({
         image: url,
@@ -36,21 +40,288 @@ export default class CompanyDetail extends React.Component {
     .catch(e => {
       alert(e);
     });
+
+    /*const refImage2 = storage.ref(product.photo1);
+    const getLink2 = await refImage2.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo1: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage3 = storage.ref(product.photo2);
+    const getLink3 = await refImage3.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo2: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage4 = storage.ref(product.photo3);
+    const getLink4 = await refImage4.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo3: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage5 = storage.ref(product.photo4);
+    const getLink5 = await refImage5.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo4: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage6 = storage.ref(product.photo5);
+    const getLink6 = await refImage6.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo5: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage7 = storage.ref(product.photo6);
+    const getLink7 = await refImage7.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo6: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage8 = storage.ref(product.photo7);
+    const getLink8 = await refImage8.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo7: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage9 = storage.ref(product.photo8);
+    const getLink9 = await refImage9.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo8: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });
+
+    const refImage10 = storage.ref(product.photo9);
+    const getLink10 = await refImage10.getDownloadURL()
+    .then(url => {
+      this.setState({
+        photo9: url,
+      });
+    })
+    .catch(e => {
+      alert(e);
+    });*/
+  };
+
+  getCategory = async (categoryId) => {
+    const allCategories = db.collection('company_categories').get()
+    .then(querySnapshot => {
+      var name = "";
+      querySnapshot.forEach(doc => {
+        if (doc.data().categoryId == categoryId) {
+          name = doc.data().name;
+        }
+      });
+      this.setState({ category: name });
+    })
+    .catch(e => {
+      alert(e);
+    });
   };
 
   componentDidMount = () => {
     const { product } = this.props.navigation.state.params;
-
-    this.getLink(product.image);
+    this.getLinks(product);
     this.setState({
       address: product.address,
       name: product.name,
       phone: product.phone,
       workingHours: product.workingHours,
+      map: product.map,
+      email: product.email,
+      facebook: product.facebook,
+      instagram: product.instagram,
+      twiteer: product.twiteer,
+      web: product.web,
+      whatsapp: product.whatsapp,
+      review: product.review,
+      categoryId: product.categoryId,
+      photo1: product.photo1,
+      photo2: product.photo2,
+      photo3: product.photo3,
+      photo4: product.photo4,
+      photo5: product.photo5,
+      photo6: product.photo6,
+      photo7: product.photo7,
+      photo8: product.photo8,
+      photo9: product.photo9,
+      product1: product.product1,
+      product2: product.product2,
+      product3: product.product3,
+      product4: product.product4,
+      product5: product.product5,
+      product6: product.product6,
+      product7: product.product7,
+      product8: product.product8,
+      product9: product.product9,
     });
+
+    if (product.categoryId === undefined || product.categoryId === null) {
+      this.setState({
+        category: "n/a"
+      });
+    }
+    else{
+      this.getCategory(product.categoryId);
+    }
+    if (product.name === undefined || product.name === null) {
+      this.setState({
+        name: "n/a"
+      });
+
+    }
+    if (product.address === undefined || product.address === null) {
+      this.setState({
+        address: "n/a"
+      });
+    }
+    if (product.workingHours === undefined || product.workingHours === null) {
+      this.setState({
+        workingHours: "n/a"
+      });
+    }
+    if (product.email === undefined || product.email === null) {
+      this.setState({
+        email: "n/a"
+      });
+    }
+    if (product.review === undefined || product.review === null) {
+      this.setState({
+        review: "n/a"
+      });
+    }
   };
 
+
+
   render() {
+    const { navigation } = this.props;
+    const photos = [];
+
+    if (this.state.product1!=undefined) {
+      if (this.state.product2!=undefined) {
+        photos.push(
+          <Block row space="around" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+            <Text size={16}>Productos</Text>
+          </Block>
+        );
+        photos.push(
+          <Block flex row>
+            <Photo key="01" product={this.state.product1} detail={this.state.photo1} style={{ marginRight: theme.SIZES.BASE }} />
+            <Photo key="02" product={this.state.product2} detail={this.state.photo2}/>
+          </Block>
+        );
+      }else{
+        photos.push(
+          <Block row space="around" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+            <Text size={16}>Productos</Text>
+          </Block>
+        );
+        photos.push(
+          <Block flex row>
+            <Photo key="01" product={this.state.product1} detail={this.state.photo1} style={{ marginRight: theme.SIZES.BASE }} />
+          </Block>
+        );
+      }
+    }
+
+    if (this.state.product3!=undefined) {
+      if (this.state.product4!=undefined) {
+        photos.push(
+          <Block flex row>
+            <Photo key="03" product={this.state.product3} detail={this.state.photo3} style={{ marginRight: theme.SIZES.BASE }} />
+            <Photo key="04" product={this.state.product4} detail={this.state.photo4}/>
+          </Block>
+        )
+      }else{
+        photos.push(
+          <Block flex row>
+            <Photo key="03" product={this.state.product3} detail={this.state.photo3} style={{ marginRight: theme.SIZES.BASE }} />
+          </Block>
+        )
+      }
+    }
+
+    if (this.state.product5!=undefined) {
+      if (this.state.product6!=undefined) {
+        photos.push(
+          <Block flex row>
+            <Photo key="05" product={this.state.product5} detail={this.state.photo5} style={{ marginRight: theme.SIZES.BASE }} />
+            <Photo key="06" product={this.state.product6} detail={this.state.photo6}/>
+          </Block>
+        )
+      }else{
+        photos.push(
+          <Block flex row>
+            <Photo key="05" product={this.state.product5} detail={this.state.photo5} style={{ marginRight: theme.SIZES.BASE }} />
+          </Block>
+        )
+      }
+    }
+
+    if (this.state.product7!=undefined) {
+      if (this.state.product8!=undefined) {
+        photos.push(
+          <Block flex row>
+            <Photo key="07" product={this.state.product7} detail={this.state.photo7} style={{ marginRight: theme.SIZES.BASE }} />
+            <Photo key="08" product={this.state.product8} detail={this.state.photo8}/>
+          </Block>
+        )
+      }else{
+        photos.push(
+          <Block flex row>
+            <Photo key="07" product={this.state.product7} detail={this.state.photo7} style={{ marginRight: theme.SIZES.BASE }} />
+          </Block>
+        )
+      }
+    }
+
+    if (this.state.product9!=undefined) {
+      photos.push(
+        <Block flex row>
+          <Photo key="09" product={this.state.product9} detail={this.state.photo9} style={{ marginRight: theme.SIZES.BASE }} />
+        </Block>
+      )
+    }
+
     return (
       <Block flex style={styles.profile}>
         <Block flex>
@@ -66,10 +337,10 @@ export default class CompanyDetail extends React.Component {
                     <Block middle style={styles.pro}>
                       <Text size={16} color="white">Tel</Text>
                     </Block>
-                    <Text color="white" size={16} muted style={styles.seller}>{this.state.phone}</Text>
+                    <Text size={16} muted color="white" style={styles.seller} onPress={() => this.state.phone==undefined?'':Linking.openURL("tel:"+this.state.phone).catch(err => console.error('An error occurred', err))}>{this.state.phone==undefined?'n/a':this.state.phone}</Text>
                   </Block>
                   <Block>
-                    <Text color={theme.COLORS.MUTED} size={16} onPress={() => this.props.navigation.navigate('CompanyMap')} >
+                    <Text color={theme.COLORS.MUTED} size={16} onPress={() => this.state.map==undefined?'':navigation.navigate('CompanyMap',{map:this.state.map}) }>
                       <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
                       {` `} {this.state.address}
                       </Text>
@@ -82,51 +353,67 @@ export default class CompanyDetail extends React.Component {
         </Block>
         <Block flex style={styles.options}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
+            <Block row space="around" style={{ padding: theme.SIZES.BASE, }}>
               <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>36</Text>
-                <Text muted size={12}>Orders</Text>
-              </Block>
-              <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>5</Text>
-                <Text muted size={12}>Bids & Offers</Text>
-              </Block>
-              <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>2</Text>
-                <Text muted size={12}>Messages</Text>
+                <Text muted size={12}>{this.state.review}</Text>
               </Block>
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
               <Text size={16}>Ubicación</Text>
-              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('CompanyMap')}>Ver Mapa</Text>
+              <Text size={12} color={this.state.map==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.map==undefined?'':navigation.navigate('CompanyMap',{map:this.state.map}) }>{this.state.map==undefined?'n/a':'Ver Mapa'}</Text>
             </Block>
-            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16}>Nombre Completo</Text>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Categoria</Text>
+              <Text size={12}>{this.state.category}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Nombre</Text>
               <Text size={12}>{this.state.name}</Text>
             </Block>
-            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16}>Dirección</Text>
-              <Text size={12}>{this.state.address}</Text>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Email</Text>
+              <Text size={12}>{this.state.email}</Text>
             </Block>
-            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Teléfono</Text>
-              <Text size={12}>{this.state.phone}</Text>
+              <Text size={12} color={this.state.phone==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.phone==undefined?'':Linking.openURL("tel:"+this.state.phone).catch(err => console.error('An error occurred', err))}>{this.state.phone==undefined?'n/a':'LLamar'}</Text>
             </Block>
-            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Facebook</Text>
+              <Text size={12} color={this.state.facebook==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.facebook==undefined?'':Linking.openURL(this.state.facebook).catch(err => console.error('An error occurred', err))}>{this.state.facebook==undefined?'n/a':'Ir a Facebook'}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Twitter</Text>
+              <Text size={12} color={this.state.twiteer==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.twiteer==undefined?'':Linking.openURL(this.state.twiteer).catch(err => console.error('An error occurred', err))}>{this.state.twiteer==undefined?'n/a':'Ir a Twiteer'}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Instagram</Text>
+              <Text size={12} color={this.state.instagram==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.instagram==undefined?'':Linking.openURL(this.state.instagram).catch(err => console.error('An error occurred', err))}>{this.state.instagram==undefined?'n/a':'Ir a Instagram'}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Whatsapp</Text>
+              <Text size={12} color={this.state.whatsapp==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.whatsapp==undefined?'':Linking.openURL("whatsapp://send?text=Tu mensaje&phone="+this.state.whatsapp+"&abid="+this.state.whatsapp).catch(err => console.error('An error occurred', err))}>{this.state.whatsapp==undefined?'n/a':'Ir a Whatsapp'}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
+              <Text size={16}>Web</Text>
+              <Text size={12} color={this.state.web==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.web==undefined?'':Linking.openURL(this.state.web).catch(err => console.error('An error occurred', err))}>{this.state.web==undefined?'n/a':'Ir a Página Web'}</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Horario</Text>
               <Text size={12}>{this.state.workingHours}</Text>
             </Block>
-            <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-              <Block row space="between" style={{ flexWrap: 'wrap' }} >
-                {Images.Viewed.map((img, imgIndex) => (
-                  <Image
-                    source={{ uri: img }}
-                    key={`viewed-${img}`}
-                    resizeMode="cover"
-                    style={styles.thumb}
-                  />
-                ))}
-              </Block>
+            {photos}
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>""</Text>
+              <Text size={12}>""</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>""</Text>
+              <Text size={12}>""</Text>
+            </Block>
+            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+              <Text size={16}>""</Text>
+              <Text size={12}>""</Text>
             </Block>
           </ScrollView>
         </Block>
