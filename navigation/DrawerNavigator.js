@@ -9,13 +9,25 @@ import { Drawer } from '../components/';
 import Menu from './Menu';
 //Screens
 import HomeScreen from '../screens/Home';
+
 import CompaniesScreen from '../screens/companies/CompaniesScreen';
+import CompanyCategoriesScreen from '../screens/companies/CompanyCategoriesScreen';
 import CompanyDetailsScreen from '../screens/companies/CompanyDetailsScreen';
 import CompanyMapScreen from '../screens/companies/CompanyMapScreen';
-import RoutesScreen from '../screens/routes/RoutesScreen';
-import RouteDetailsScreen from '../screens/routes/RouteDetailsScreen';
+import CompanySearchScreen from '../screens/companies/CompanySearchScreen';
+
 import TourismScreen from '../screens/tourism/TourismScreen';
+import TourismCategoriesScreen from '../screens/tourism/TourismCategoriesScreen';
 import TourismDetailsScreen from '../screens/tourism/TourismDetailsScreen';
+import TourismMapScreen from '../screens/tourism/TourismMapScreen';
+import TourismSearchScreen from '../screens/tourism/TourismSearchScreen';
+
+import RoutesScreen from '../screens/routes/RoutesScreen';
+import RoutesCategoriesScreen from '../screens/routes/RoutesCategoriesScreen';
+import RoutesDetailsScreen from '../screens/routes/RoutesDetailsScreen';
+import RoutesMapScreen from '../screens/routes/RoutesMapScreen';
+import RoutesSearchScreen from '../screens/routes/RoutesSearchScreen';
+
 import LogoutScreen from '../screens/auth/LogoutScreen';
 
 class Hidden extends React.Component {
@@ -69,19 +81,14 @@ const ScreenStack = createStackNavigator({
   Companies: {
     screen: CompaniesScreen,
     navigationOptions: ({navigation}) => ({
-      header: <Header search title="Empresas" navigation={navigation} />,
+      header: <Header search tabs title="Empresas" navigation={navigation} />,
     })
   },
-  Routes: {
-    screen: RoutesScreen,
-    navigationOptions: ({navigation}) => ({
-      header: <Header search title="Rutas" navigation={navigation} />,
-    })
-  },
-  Tourism: {
-    screen: TourismScreen,
-    navigationOptions: ({navigation}) => ({
-      header: <Header search title="Turismo" navigation={navigation} />,
+  CompanyCategories: {
+    screen: CompanyCategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Categorias de Empresas" navigation={navigation} />,
+      headerTransparent: true,
     })
   },
   CompanyDetails: {
@@ -98,10 +105,23 @@ const ScreenStack = createStackNavigator({
       headerTransparent: true,
     })
   },
-  RouteDetails: {
-    screen: RouteDetailsScreen,
+  CompanySearch: {
+    screen: CompanySearchScreen,
     navigationOptions: ({ navigation }) => ({
-      header: <Header white transparent title="Detalles Ruta" navigation={navigation} />,
+      header: <Header title="Busqueda" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  Tourism: {
+    screen: TourismScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header search tourism title="Turismo" navigation={navigation} />,
+    })
+  },
+  TourismCategories: {
+    screen: TourismCategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Categorias de Turismo" navigation={navigation} />,
       headerTransparent: true,
     })
   },
@@ -109,6 +129,54 @@ const ScreenStack = createStackNavigator({
     screen: TourismDetailsScreen,
     navigationOptions: ({ navigation }) => ({
       header: <Header white transparent title="Detalles Turismo" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  TourismMap: {
+    screen: TourismMapScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Mapa Turismo" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  TourismSearch: {
+    screen: TourismSearchScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Busqueda" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  Routes: {
+    screen: RoutesScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header search title="Rutas" navigation={navigation} />,
+    })
+  },
+  RoutesCategories: {
+    screen: RoutesCategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Categorias de Rutas" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  RoutesDetails: {
+    screen: RoutesDetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header white transparent title="Detalles Ruta" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  RoutesMap: {
+    screen: RoutesMapScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Mapa Ruta" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  RoutesSearch: {
+    screen: RoutesSearchScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Busqueda" navigation={navigation} />,
       headerTransparent: true,
     })
   },
@@ -120,7 +188,7 @@ const ScreenStack = createStackNavigator({
   }
 },
 {
-    initialRouteName: 'Companies'
+    initialRouteName: 'Home'
 },
 {
   cardStyle: {
@@ -143,47 +211,15 @@ const drawerNavigator = createDrawerNavigator(
       screen: ScreenStack,
       navigationOptions: (navOpt) => ({
         drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Companies" title="Compañias" />
+          <Drawer focused={focused} screen="Companies" title="Empresas" />
         ),
       }),
     },
-    Tourism: {
-      screen: ScreenStack,
-      navigationOptions: (navOpt) => ({
-        drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Tourism" title="Turismo" />
-        ),
-      }),
-    },
-    Routes: {
-      screen: ScreenStack,
-      navigationOptions: (navOpt) => ({
-        drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Routes" title="Rutas" />
-        ),
-      }),
-    },
-    MenuDivider: {
+    CompanyCategories: {
       screen: ScreenStack,
       navigationOptions: {
-        drawerLabel: () => <Block style={{marginVertical: 8}}><Text>{` `}</Text></Block>,
+        drawerLabel: <Hidden />,
       },
-    },
-    Profile: {
-      screen: ScreenStack,
-      navigationOptions: (navOpt) => ({
-        drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Profile" title="Perfil" />
-        ),
-      }),
-    },
-    Logout: {
-      screen: ScreenStack,
-      navigationOptions: (navOpt) => ({
-        drawerLabel: ({focused}) => (
-          <Drawer focused={focused} screen="Logout" title="Logout" />
-        ),
-      }),
     },
     CompanyDetails: {
       screen: ScreenStack,
@@ -197,17 +233,95 @@ const drawerNavigator = createDrawerNavigator(
         drawerLabel: <Hidden />,
       },
     },
+    CompanySearch: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    Tourism: {
+      screen: ScreenStack,
+      navigationOptions: (navOpt) => ({
+        drawerLabel: ({focused}) => (
+          <Drawer focused={focused} screen="Tourism" title="Turismo" />
+        ),
+      }),
+    },
+    TourismCategories: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
     TourismDetails: {
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: <Hidden />,
       },
     },
-    RouteDetails: {
+    TourismMap: {
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: <Hidden />,
       },
+    },
+    TourismSearch: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    Routes: {
+      screen: ScreenStack,
+      navigationOptions: (navOpt) => ({
+        drawerLabel: ({focused}) => (
+          <Drawer focused={focused} screen="Routes" title="Rutas" />
+        ),
+      }),
+    },
+    RoutesCategories: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    RoutesDetails: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    RoutesMap: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    RoutesSearch: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    MenuDivider: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: () => <Block style={{marginVertical: 8}}><Text>{` `}</Text></Block>,
+      },
+    },
+    Profile: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    Logout: {
+      screen: ScreenStack,
+      navigationOptions: (navOpt) => ({
+        drawerLabel: ({focused}) => (
+          <Drawer focused={focused} screen="Logout" title="Logout" />
+        ),
+      }),
     },
   },
   Menu

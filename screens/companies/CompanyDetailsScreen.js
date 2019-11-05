@@ -40,105 +40,6 @@ export default class CompanyDetail extends React.Component {
     .catch(e => {
       alert(e);
     });
-
-    /*const refImage2 = storage.ref(product.photo1);
-    const getLink2 = await refImage2.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo1: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage3 = storage.ref(product.photo2);
-    const getLink3 = await refImage3.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo2: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage4 = storage.ref(product.photo3);
-    const getLink4 = await refImage4.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo3: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage5 = storage.ref(product.photo4);
-    const getLink5 = await refImage5.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo4: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage6 = storage.ref(product.photo5);
-    const getLink6 = await refImage6.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo5: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage7 = storage.ref(product.photo6);
-    const getLink7 = await refImage7.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo6: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage8 = storage.ref(product.photo7);
-    const getLink8 = await refImage8.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo7: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage9 = storage.ref(product.photo8);
-    const getLink9 = await refImage9.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo8: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });
-
-    const refImage10 = storage.ref(product.photo9);
-    const getLink10 = await refImage10.getDownloadURL()
-    .then(url => {
-      this.setState({
-        photo9: url,
-      });
-    })
-    .catch(e => {
-      alert(e);
-    });*/
   };
 
   getCategory = async (categoryId) => {
@@ -236,8 +137,8 @@ export default class CompanyDetail extends React.Component {
     const { navigation } = this.props;
     const photos = [];
 
-    if (this.state.product1!=undefined) {
-      if (this.state.product2!=undefined) {
+    if (this.state.photo1!=undefined) {
+      if (this.state.photo2!=undefined) {
         photos.push(
           <Block row space="around" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
             <Text size={16}>Productos</Text>
@@ -263,8 +164,8 @@ export default class CompanyDetail extends React.Component {
       }
     }
 
-    if (this.state.product3!=undefined) {
-      if (this.state.product4!=undefined) {
+    if (this.state.photo3!=undefined) {
+      if (this.state.photo4!=undefined) {
         photos.push(
           <Block flex row>
             <Photo key="03" product={this.state.product3} detail={this.state.photo3} style={{ marginRight: theme.SIZES.BASE }} />
@@ -280,8 +181,8 @@ export default class CompanyDetail extends React.Component {
       }
     }
 
-    if (this.state.product5!=undefined) {
-      if (this.state.product6!=undefined) {
+    if (this.state.photo5!=undefined) {
+      if (this.state.photo6!=undefined) {
         photos.push(
           <Block flex row>
             <Photo key="05" product={this.state.product5} detail={this.state.photo5} style={{ marginRight: theme.SIZES.BASE }} />
@@ -297,8 +198,8 @@ export default class CompanyDetail extends React.Component {
       }
     }
 
-    if (this.state.product7!=undefined) {
-      if (this.state.product8!=undefined) {
+    if (this.state.photo7!=undefined) {
+      if (this.state.photo8!=undefined) {
         photos.push(
           <Block flex row>
             <Photo key="07" product={this.state.product7} detail={this.state.photo7} style={{ marginRight: theme.SIZES.BASE }} />
@@ -314,7 +215,7 @@ export default class CompanyDetail extends React.Component {
       }
     }
 
-    if (this.state.product9!=undefined) {
+    if (this.state.photo9!=undefined) {
       photos.push(
         <Block flex row>
           <Photo key="09" product={this.state.product9} detail={this.state.photo9} style={{ marginRight: theme.SIZES.BASE }} />

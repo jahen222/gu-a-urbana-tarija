@@ -4,7 +4,7 @@ import Firebase, { storage } from '../../config/Firebase.js';
 
 const { width, height } = Dimensions.get('screen');
 
-class CompanyMap extends React.Component {
+class TourismMap extends React.Component {
 
   state = {
     map: ""
@@ -32,4 +32,4 @@ class CompanyMap extends React.Component {
   }
 }
 
-export default CompanyMap;
+export default TourismMap;

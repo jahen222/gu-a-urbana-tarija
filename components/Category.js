@@ -8,7 +8,7 @@ import Icon from './Icon';
 
 const { width } = Dimensions.get('screen');
 
-class Product extends React.Component {
+class Category extends React.Component {
   state = {
     url: ''
   };
@@ -26,24 +26,20 @@ class Product extends React.Component {
   };
 
   render() {
-    const { navigation, product, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
+    const { navigation, category, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    this.getLink(product.image);
+    this.getLink(category.image);
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
+        <TouchableWithoutFeedback onPress={ () => navigation.navigate('CompanySearch', {category: category}) }>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: this.state.url }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
+        <TouchableWithoutFeedback onPress={ () => navigation.navigate('CompanySearch', {category: category}) }>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={14} style={styles.productTitle}>{product.name}</Text>
-            <Text color={theme.COLORS.MUTED} size={13}>
-              <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-              {` `} {product.address}
-            </Text>
+            <Text size={14} style={styles.productTitle}>{category.name}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -51,7 +47,7 @@ class Product extends React.Component {
   }
 }
 
-export default withNavigation(Product);
+export default withNavigation(Category);
 
 const styles = StyleSheet.create({
   product: {

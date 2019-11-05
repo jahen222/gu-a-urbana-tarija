@@ -126,16 +126,29 @@ class Header extends React.Component {
 
     return (
       <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+        <Button shadowless style={[styles.tab]} onPress={() => navigation.navigate('CompanyCategories')}>
           <Block row middle>
             <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Categories'}</Text>
+            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Categorias'}</Text>
           </Block>
         </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+      </Block>
+    )
+  }
+
+  renderTourism = () => {
+    const { navigation, tabTitleLeft, tabTitleRight } = this.props;
+
+    return (
+      <Block row style={styles.tabs}>
+        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('TourismSearch', { category: "ciudad" })}>
           <Block row middle>
-            <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Best Deals'}</Text>
+            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Ciudad'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('TourismSearch', { category: "campo" })}>
+          <Block row middle>
+            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Campo'}</Text>
           </Block>
         </Button>
       </Block>
@@ -143,12 +156,13 @@ class Header extends React.Component {
   }
 
   renderHeader = () => {
-    const { search, tabs } = this.props;
-    if (search || tabs) {
+    const { search, tabs, tourism } = this.props;
+    if (search || tabs || tourism) {
       return (
         <Block center>
           {search ? this.renderSearch() : null}
           {tabs ? this.renderTabs() : null}
+          {tourism ? this.renderTourism() : null}
         </Block>
       )
     }

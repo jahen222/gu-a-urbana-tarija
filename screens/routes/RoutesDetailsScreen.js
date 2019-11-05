@@ -10,7 +10,7 @@ import { HeaderHeight } from "../../constants/utils";
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default class TourismDetail extends React.Component {
+export default class RoutesDetail extends React.Component {
   state = {
     address: "",
     id: "",
@@ -60,8 +60,9 @@ export default class TourismDetail extends React.Component {
 
   componentDidMount = () => {
     const { product } = this.props.navigation.state.params;
-    this.getLinks(product);
+    //this.getLinks(product);
     this.setState({
+      image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
       address: product.address,
       name: product.name,
       phone: product.phone,
@@ -99,6 +100,9 @@ export default class TourismDetail extends React.Component {
       this.setState({
         category: "n/a"
       });
+    }
+    else{
+      this.getCategory(product.categoryId);
     }
     if (product.name === undefined || product.name === null) {
       this.setState({
@@ -238,7 +242,7 @@ export default class TourismDetail extends React.Component {
                     <Text size={16} muted color="white" style={styles.seller} onPress={() => this.state.phone==undefined?'':Linking.openURL("tel:"+this.state.phone).catch(err => console.error('An error occurred', err))}>{this.state.phone==undefined?'n/a':this.state.phone}</Text>
                   </Block>
                   <Block>
-                    <Text color={theme.COLORS.MUTED} size={16} onPress={() => this.state.map==undefined?'':navigation.navigate('TourismMap',{map:this.state.map}) }>
+                    <Text color={theme.COLORS.MUTED} size={16} onPress={() => this.state.map==undefined?'':navigation.navigate('RoutesMap',{map:this.state.map}) }>
                       <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
                       {` `} {this.state.address}
                       </Text>
@@ -258,11 +262,11 @@ export default class TourismDetail extends React.Component {
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
               <Text size={16}>Ubicación</Text>
-              <Text size={12} color={this.state.map==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.map==undefined?'':navigation.navigate('TourismMap',{map:this.state.map}) }>{this.state.map==undefined?'n/a':'Ver Mapa'}</Text>
+              <Text size={12} color={this.state.map==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.map==undefined?'':navigation.navigate('RoutesMap',{map:this.state.map}) }>{this.state.map==undefined?'n/a':'Ver Mapa'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Categoria</Text>
-              <Text size={12}>{this.state.categoryId}</Text>
+              <Text size={12}>{this.state.category}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Nombre</Text>

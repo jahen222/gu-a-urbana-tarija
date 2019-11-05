@@ -1,74 +1,62 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product } from '../../components/';
+import { Icon, Product, Category } from '../../components/';
 import products from '../../constants/products';
 import Firebase, { db, storage } from '../../config/Firebase.js';
 
 const { width } = Dimensions.get('screen');
 
-export default class Routes extends React.Component {
-  state = { companies: [] };
+export default class CompanyCategories extends React.Component {
+  state = { categories: [] };
 
   componentDidMount = () => {
-    const allCompanies = db.collection('routes').get()
+    const allCategories = db.collection('company_categories').get()
     .then(querySnapshot => {
-      const companies = [];
+      const categories = [];
       querySnapshot.forEach(doc => {
-        companies.push({
+        categories.push({
           id: doc.id,
           name: doc.data().name,
-          address: doc.data().address,
           image: doc.data().image,
-          phone: doc.data().phone,
-          workingHours: doc.data().workingHours,
-          email: doc.data().email,
-          facebook: doc.data().facebook,
-          instagram: doc.data().instagram,
-          twiteer: doc.data().twiteer,
-          web: doc.data().web,
-          map: doc.data().map,
-          whatsapp: doc.data().whatsapp,
-          review: doc.data().review,
-          photo1: doc.data().photo1,
-          photo2: doc.data().photo2,
-          photo3: doc.data().photo3,
-          photo4: doc.data().photo4,
-          photo5: doc.data().photo5,
-          photo6: doc.data().photo6,
-          photo7: doc.data().photo7,
-          photo8: doc.data().photo8,
-          photo9: doc.data().photo9,
-          product1: doc.data().product1,
-          product2: doc.data().product2,
-          product3: doc.data().product3,
-          product4: doc.data().product4,
-          product5: doc.data().product5,
-          product6: doc.data().product6,
-          product7: doc.data().product7,
-          product8: doc.data().product8,
-          photo9: doc.data().photo9,
-          categoryId: doc.data().categoryId,
+          categoryId: doc.data().categoryId
         });
       });
-      this.setState({ companies });
+      this.setState({ categories });
     })
     .catch(e => {
       alert(e);
     });
   };
 
-  renderProducts = () => {
+  renderCategories = () => {
+    const categories = [];
+    for (var i = 0; i <= this.state.categories.length+1; i=i+2) {
+      const category = this.state.categories;
+      if (category[i]!=undefined) {
+        if (category[i+1]!=undefined) {
+          categories.push(
+            <Block flex row>
+              <Category key={category[i].id} category={category[i]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
+              <Category key={category[i+1].id} category={category[i+1]} detail='category'  />
+            </Block>
+          )
+        }else{
+          categories.push(
+            <Block flex row>
+              <Category key={category[i].id} category={category[i]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
+            </Block>
+          )
+        }
+      }
+    }
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          {this.state.companies.map(product => {
-            return (
-              <Product key={product.id} product={product} detail='routes' horizontal />
-            );
-          })}
+          {categories}
         </Block>
       </ScrollView>
     )
@@ -77,7 +65,7 @@ export default class Routes extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderProducts()}
+        {this.renderCategories()}
       </Block>
     );
   }
