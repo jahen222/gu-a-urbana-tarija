@@ -8,6 +8,8 @@ import Header from './Header';
 import Switch from './Switch';
 import Photo from './Photo';
 import Category from './Category';
+import Route from './Route';
+import CompanyProduct from './Company';
 
 export {
   Button,
@@ -19,5 +21,7 @@ export {
   Header,
   Switch,
   Photo,
-  Category
+  Category,
+  Route,
+  CompanyProduct
 };

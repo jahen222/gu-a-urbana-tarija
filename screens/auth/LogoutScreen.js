@@ -42,19 +42,19 @@ class LogoutScreen extends React.Component {
             <Block flex center>
               <ImageBackground
                 source={ Images.Onboarding }
-                style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
+                style={{ height: height, width: width, marginTop: '-45%', zIndex: 1 }}
               />
             </Block>
             <Block flex space="between" style={styles.padded}>
               <Block flex space="around" style={{ zIndex: 2 }}>
                 <Block center>
-                  <Text color="white" size={35}>¿Quieres salir?</Text>
+                  <Text color="white" size={35}></Text>
                 </Block>
                 <Block center>
                   <Button
                     shadowless
                     style={styles.button}
-                    color={materialTheme.COLORS.BUTTON_COLOR}
+                    color="#3333ff"
                     onPress={this.handleLogout}>
                     SALIR
                   </Button>
@@ -72,7 +72,7 @@ LogoutScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.COLORS.BLACK,
+    backgroundColor: theme.COLORS.WHIT,
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,

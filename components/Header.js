@@ -45,6 +45,9 @@ const SearchButton = ({isWhite, style, navigation}) => (
 );
 
 class Header extends React.Component {
+  state = {
+      search: '',
+  };
   handleLeftPress = () => {
     const { back, navigation } = this.props;
     return (back ? navigation.goBack() : navigation.openDrawer());
@@ -115,8 +118,9 @@ class Header extends React.Component {
         color="black"
         style={styles.search}
         placeholder="¿Qué Estas Buscando?"
-        onFocus={() => navigation.navigate('Pro')}
-        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
+        value={this.state.search}
+        onChangeText={search => this.setState({ search })}
+        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" onPress={() => navigation.navigate('Search', {search: this.state.search})} family="entypo" />}
       />
     )
   }
@@ -128,7 +132,7 @@ class Header extends React.Component {
       <Block row style={styles.tabs}>
         <Button shadowless style={[styles.tab]} onPress={() => navigation.navigate('CompanyCategories')}>
           <Block row middle>
-            <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
+            <Icon name="grid" family="feather" style={{ paddingRight: 8, color: 'white' }} />
             <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Categorias'}</Text>
           </Block>
         </Button>
@@ -143,11 +147,13 @@ class Header extends React.Component {
       <Block row style={styles.tabs}>
         <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('TourismSearch', { category: "ciudad" })}>
           <Block row middle>
+            <Icon name="home" family="feather" style={{ paddingRight: 8, color: 'white' }} />
             <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Ciudad'}</Text>
           </Block>
         </Button>
         <Button shadowless style={styles.tab} onPress={() => navigation.navigate('TourismSearch', { category: "campo" })}>
           <Block row middle>
+            <Icon name="image" family="feather" style={{ paddingRight: 8, color: 'white' }} />
             <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Campo'}</Text>
           </Block>
         </Button>
@@ -159,7 +165,7 @@ class Header extends React.Component {
     const { search, tabs, tourism } = this.props;
     if (search || tabs || tourism) {
       return (
-        <Block center>
+        <Block center style={{ backgroundColor: "#3b6dc7" }}>
           {search ? this.renderSearch() : null}
           {tabs ? this.renderTabs() : null}
           {tourism ? this.renderTourism() : null}
@@ -189,10 +195,10 @@ class Header extends React.Component {
           rightStyle={{ alignItems: 'center' }}
           leftStyle={{ flex: 0.3, paddingTop: 2  }}
           leftIconName="navicon"
-          leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}
+          leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.WHITE}
           titleStyle={[
             styles.title,
-            {color: theme.COLORS[white ? 'WHITE' : 'ICON']},
+            {color: theme.COLORS[white ? 'WHITE' : 'WHITE']},
           ]}
           onLeftPress={this.handleLeftPress}
         />
@@ -219,6 +225,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE * 1.5,
     paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE,
     zIndex: 5,
+    backgroundColor: "#3333ff",
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,
@@ -266,6 +273,7 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     lineHeight: 19,
-    fontWeight: '300'
+    fontWeight: '300',
+    color: 'white',
   },
 })

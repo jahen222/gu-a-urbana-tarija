@@ -64,39 +64,38 @@ class LoginScreen extends React.Component {
             <Block flex space="between" style={styles.padded}>
               <Block flex space="around" style={{ zIndex: 2 }}>
                 <Block center>
-                  <Text color="white" size={35}>Guía Urbana Tarija</Text>
+                  <Text color="white" size={35}></Text>
                 </Block>
                 <Block center>
                   <Input
                     placeholder="Email"
                     value={this.state.email}
                     onChangeText={email => this.setState({ email })}
-                    placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                    style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
+                    placeholderTextColor={materialTheme.COLORS.BLACK}
+                    style={{ borderRadius: 6, borderColor: materialTheme.COLORS.BLACK }}
                   />
                   <Input
                     placeholder="Contraseña"
                     value={this.state.password}
+                    password viewPass
                     onChangeText={password => this.setState({ password })}
-                    placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                    style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
+                    placeholderTextColor={materialTheme.COLORS.BLACK}
+                    style={{ borderRadius: 6, borderColor: materialTheme.COLORS.BLACK }}
                   />
                 </Block>
                 <Block center>
                   <Button
                     shadowless
                     style={styles.button}
-                    color={materialTheme.COLORS.BUTTON_COLOR}
+                    color="#3333ff"
                     onPress={this.handleLogin}>
                     ENTRAR
                   </Button>
-                  <Button
-                    shadowless
-                    style={styles.button}
-                    color='#00000'
+                  <Text h5
+                    style={{ paddingTop: 8 }}
                     onPress={() => this.props.navigation.navigate('Signup')}>
                     ¿No tienes cuenta?, Registrate aquí
-                  </Button>
+                  </Text>
                 </Block>
               </Block>
             </Block>
@@ -111,7 +110,7 @@ LoginScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.COLORS.BLACK,
+    backgroundColor: theme.COLORS.WHITE,
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
@@ -119,6 +118,12 @@ const styles = StyleSheet.create({
     bottom: theme.SIZES.BASE,
   },
   button: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+  },
+  buttonTo: {
     width: width - theme.SIZES.BASE * 4,
     height: theme.SIZES.BASE * 3,
     shadowRadius: 0,

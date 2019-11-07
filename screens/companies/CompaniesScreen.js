@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product } from '../../components/';
+import { Icon, Product, CompanyProduct } from '../../components/';
 import products from '../../constants/products';
 import Firebase, { db, storage } from '../../config/Firebase.js';
 
@@ -49,6 +49,7 @@ export default class Company extends React.Component {
           product8: doc.data().product8,
           photo9: doc.data().photo9,
           categoryId: doc.data().categoryId,
+          stars: doc.data().stars
         });
       });
       this.setState({ companies });
@@ -66,7 +67,7 @@ export default class Company extends React.Component {
         <Block flex>
           {this.state.companies.map(product => {
             return (
-              <Product key={product.id} product={product} detail='company' horizontal />
+              <CompanyProduct key={product.id} product={product} detail='company' horizontal />
             );
           })}
         </Block>

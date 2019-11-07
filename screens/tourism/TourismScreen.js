@@ -58,17 +58,34 @@ export default class Tourism extends React.Component {
     });
   };
 
-  renderProducts = () => {
+  renderTourism = () => {
+    const tourisms = [];
+    for (var i = 0; i <= this.state.companies.length+2; i=i+2) {
+      const tourism = this.state.companies;
+      if (tourism[i]!=undefined) {
+        if (tourism[i+1]!=undefined) {
+          tourisms.push(
+            <Block flex row>
+              <Product key={tourism[i].id} product={tourism[i]} detail='tourism' style={{ marginRight: theme.SIZES.BASE }} />
+              <Product key={tourism[i+1].id} product={tourism[i+1]} detail='tourism'  />
+            </Block>
+          )
+        }else{
+          tourisms.push(
+            <Block flex row>
+              <Product key={tourism[i].id} product={tourism[i]} detail='tourism' style={{ marginRight: theme.SIZES.BASE }} />
+            </Block>
+          )
+        }
+      }
+    }
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          {this.state.companies.map(product => {
-            return (
-              <Product key={product.id} product={product} detail='tourism' horizontal />
-            );
-          })}
+          {tourisms}
         </Block>
       </ScrollView>
     )
@@ -77,7 +94,7 @@ export default class Tourism extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderProducts()}
+        {this.renderTourism()}
       </Block>
     );
   }

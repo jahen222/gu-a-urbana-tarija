@@ -12,7 +12,6 @@ const Drawer = (props) => (
     <Block flex={0.2} style={styles.header}>
       <TouchableWithoutFeedback onPress={() => props.navigation.navigate('Profile')} >
         <Block style={styles.profile}>
-          <Image source={{ uri: props.profile.avatar}} style={styles.avatar} />
           <Text h5 color="white">{props.profile.name}</Text>
         </Block>
       </TouchableWithoutFeedback>
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#4B1958',
+    backgroundColor: '#3333ff',
     paddingHorizontal: 28,
     paddingBottom: theme.SIZES.BASE,
     paddingTop: theme.SIZES.BASE * 2,

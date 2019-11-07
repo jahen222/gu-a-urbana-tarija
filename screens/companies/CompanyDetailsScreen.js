@@ -93,6 +93,7 @@ export default class CompanyDetail extends React.Component {
       product7: product.product7,
       product8: product.product8,
       product9: product.product9,
+      stars: product.stars
     });
 
     if (product.categoryId === undefined || product.categoryId === null) {
@@ -127,6 +128,11 @@ export default class CompanyDetail extends React.Component {
     if (product.review === undefined || product.review === null) {
       this.setState({
         review: "n/a"
+      });
+    }
+    if (product.stars === undefined || product.stars === null) {
+      this.setState({
+        stars: "n/a"
       });
     }
   };
@@ -247,6 +253,15 @@ export default class CompanyDetail extends React.Component {
                       </Text>
                   </Block>
                 </Block>
+                <Block row space="between">
+                  <Block row>
+                    <Block middle>
+                      <Text size={16} color={materialTheme.COLORS.WARNING} style={styles.seller}>
+                        {this.state.stars}<Icon name="shape-star" family="GalioExtra" size={14} />
+                      </Text>
+                    </Block>
+                  </Block>
+                </Block>
               </Block>
               <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={styles.gradient} />
             </Block>
@@ -261,7 +276,7 @@ export default class CompanyDetail extends React.Component {
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
               <Text size={16}>Ubicación</Text>
-              <Text size={12} color={this.state.map==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.map==undefined?'':navigation.navigate('CompanyMap',{map:this.state.map}) }>{this.state.map==undefined?'n/a':'Ver Mapa'}</Text>
+              <Text size={12} color={this.state.map==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.map==undefined?'':navigation.navigate('CompanyMap',{map:this.state.map}) }>{this.state.map==undefined?'n/a':'Ver Mapa'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Categoria</Text>
@@ -277,27 +292,27 @@ export default class CompanyDetail extends React.Component {
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Teléfono</Text>
-              <Text size={12} color={this.state.phone==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.phone==undefined?'':Linking.openURL("tel:"+this.state.phone).catch(err => console.error('An error occurred', err))}>{this.state.phone==undefined?'n/a':'LLamar'}</Text>
+              <Text size={12} color={this.state.phone==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.phone==undefined?'':Linking.openURL("tel:"+this.state.phone).catch(err => console.error('An error occurred', err))}>{this.state.phone==undefined?'n/a':'LLamar'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Facebook</Text>
-              <Text size={12} color={this.state.facebook==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.facebook==undefined?'':Linking.openURL(this.state.facebook).catch(err => console.error('An error occurred', err))}>{this.state.facebook==undefined?'n/a':'Ir a Facebook'}</Text>
+              <Text size={12} color={this.state.facebook==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.facebook==undefined?'':Linking.openURL(this.state.facebook).catch(err => console.error('An error occurred', err))}>{this.state.facebook==undefined?'n/a':'Ir a Facebook'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Twitter</Text>
-              <Text size={12} color={this.state.twiteer==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.twiteer==undefined?'':Linking.openURL(this.state.twiteer).catch(err => console.error('An error occurred', err))}>{this.state.twiteer==undefined?'n/a':'Ir a Twiteer'}</Text>
+              <Text size={12} color={this.state.twiteer==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.twiteer==undefined?'':Linking.openURL(this.state.twiteer).catch(err => console.error('An error occurred', err))}>{this.state.twiteer==undefined?'n/a':'Ir a Twiteer'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Instagram</Text>
-              <Text size={12} color={this.state.instagram==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.instagram==undefined?'':Linking.openURL(this.state.instagram).catch(err => console.error('An error occurred', err))}>{this.state.instagram==undefined?'n/a':'Ir a Instagram'}</Text>
+              <Text size={12} color={this.state.instagram==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.instagram==undefined?'':Linking.openURL(this.state.instagram).catch(err => console.error('An error occurred', err))}>{this.state.instagram==undefined?'n/a':'Ir a Instagram'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Whatsapp</Text>
-              <Text size={12} color={this.state.whatsapp==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.whatsapp==undefined?'':Linking.openURL("whatsapp://send?text=Tu mensaje&phone="+this.state.whatsapp+"&abid="+this.state.whatsapp).catch(err => console.error('An error occurred', err))}>{this.state.whatsapp==undefined?'n/a':'Ir a Whatsapp'}</Text>
+              <Text size={12} color={this.state.whatsapp==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.whatsapp==undefined?'':Linking.openURL("whatsapp://send?text=Tu mensaje&phone="+this.state.whatsapp+"&abid="+this.state.whatsapp).catch(err => console.error('An error occurred', err))}>{this.state.whatsapp==undefined?'n/a':'Ir a Whatsapp'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Web</Text>
-              <Text size={12} color={this.state.web==undefined?theme.COLORS.BLACK:theme.COLORS.PRIMARY} onPress={() => this.state.web==undefined?'':Linking.openURL(this.state.web).catch(err => console.error('An error occurred', err))}>{this.state.web==undefined?'n/a':'Ir a Página Web'}</Text>
+              <Text size={12} color={this.state.web==undefined?theme.COLORS.BLACK:"#3333ff"} onPress={() => this.state.web==undefined?'':Linking.openURL(this.state.web).catch(err => console.error('An error occurred', err))}>{this.state.web==undefined?'n/a':'Ir a Página Web'}</Text>
             </Block>
             <Block row space="between" style={{ paddingVertical: 10, alignItems: 'baseline' }}>
               <Text size={16}>Horario</Text>
@@ -347,7 +362,7 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   pro: {
-    backgroundColor: materialTheme.COLORS.LABEL,
+    backgroundColor: "#3333ff",
     paddingHorizontal: 6,
     marginRight: theme.SIZES.BASE / 2,
     borderRadius: 4,

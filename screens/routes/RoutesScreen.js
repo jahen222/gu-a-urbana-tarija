@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product } from '../../components/';
+import { Icon, Route } from '../../components/';
 import products from '../../constants/products';
 import Firebase, { db, storage } from '../../config/Firebase.js';
 
@@ -19,7 +19,7 @@ export default class Routes extends React.Component {
           id: doc.id,
           name: doc.data().name,
           address: doc.data().address,
-          image: doc.data().image,
+          image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
           phone: doc.data().phone,
           workingHours: doc.data().workingHours,
           email: doc.data().email,
@@ -66,7 +66,7 @@ export default class Routes extends React.Component {
         <Block flex>
           {this.state.companies.map(product => {
             return (
-              <Product key={product.id} product={product} detail='routes' horizontal />
+              <Route key={product.id} product={product} detail='routes' horizontal />
             );
           })}
         </Block>

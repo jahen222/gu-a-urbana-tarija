@@ -31,16 +31,26 @@ export default class CompanyCategories extends React.Component {
 
   renderCategories = () => {
     const categories = [];
-    for (var i = 0; i <= this.state.categories.length+1; i=i+2) {
+    for (var i = 0; i <= this.state.categories.length+3; i=i+3) {
       const category = this.state.categories;
       if (category[i]!=undefined) {
         if (category[i+1]!=undefined) {
-          categories.push(
-            <Block flex row>
-              <Category key={category[i].id} category={category[i]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
-              <Category key={category[i+1].id} category={category[i+1]} detail='category'  />
-            </Block>
-          )
+          if (category[i+2]!=undefined) {
+            categories.push(
+              <Block flex row>
+                <Category key={category[i].id} category={category[i]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
+                <Category key={category[i+1].id} category={category[i+1]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
+                <Category key={category[i+2].id} category={category[i+2]} detail='category'  />
+              </Block>
+            )
+          }else{
+            categories.push(
+              <Block flex row>
+                <Category key={category[i].id} category={category[i]} detail='category' style={{ marginRight: theme.SIZES.BASE }} />
+                <Category key={category[i+1].id} category={category[i+1]} detail='category'  />
+              </Block>
+            )
+          }
         }else{
           categories.push(
             <Block flex row>

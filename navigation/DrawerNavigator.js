@@ -9,6 +9,7 @@ import { Drawer } from '../components/';
 import Menu from './Menu';
 //Screens
 import HomeScreen from '../screens/Home';
+import SearchScreen from '../screens/SearchScreen';
 
 import CompaniesScreen from '../screens/companies/CompaniesScreen';
 import CompanyCategoriesScreen from '../screens/companies/CompanyCategoriesScreen';
@@ -76,6 +77,12 @@ const ScreenStack = createStackNavigator({
     screen: HomeScreen,
     navigationOptions: ({navigation}) => ({
       header: <Header search title="Home" navigation={navigation} />,
+    })
+  },
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header title="Search" navigation={navigation} />,
     })
   },
   Companies: {
@@ -206,6 +213,12 @@ const drawerNavigator = createDrawerNavigator(
           <Drawer focused={focused} screen="Home" title="Home" />
         )
       }
+    },
+    Search: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
     },
     Companies: {
       screen: ScreenStack,

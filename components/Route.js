@@ -8,9 +8,9 @@ import Icon from './Icon';
 
 const { width } = Dimensions.get('screen');
 
-class Product extends React.Component {
+class Route extends React.Component {
   state = {
-    url: ''
+    url: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg'
   };
 
   getLink = async (image) => {
@@ -28,11 +28,11 @@ class Product extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    this.getLink(product.image);
+    //this.getLink(product.image);
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
+        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{ navigation.navigate('RoutesMap',{ map: product.map }) }}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: this.state.url }} style={imageStyles} />
           </Block>
@@ -40,6 +40,9 @@ class Product extends React.Component {
         <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
+            <Text>
+              {detail}
+            </Text>
             <Text>
               {product.address ? (
                 <Text color={theme.COLORS.MUTED} size={13}>
@@ -57,7 +60,7 @@ class Product extends React.Component {
   }
 }
 
-export default withNavigation(Product);
+export default withNavigation(Route);
 
 const styles = StyleSheet.create({
   product: {
@@ -96,8 +99,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.1,
     elevation: 2,
-  },
-  seller: {
-    marginRight: theme.SIZES.BASE / 2,
   },
 });

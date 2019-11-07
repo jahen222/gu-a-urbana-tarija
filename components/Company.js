@@ -8,7 +8,7 @@ import Icon from './Icon';
 
 const { width } = Dimensions.get('screen');
 
-class Product extends React.Component {
+class CompanyProduct extends React.Component {
   state = {
     url: ''
   };
@@ -41,6 +41,18 @@ class Product extends React.Component {
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
             <Text>
+              {detail}
+            </Text>
+            <Text>
+              {product.stars ? (
+                <Text size={16} color={materialTheme.COLORS.WARNING} style={styles.seller}>
+                  {product.stars}<Icon name="shape-star" family="GalioExtra" />
+                </Text>
+              ): (
+                ""
+              )}
+            </Text>
+            <Text>
               {product.address ? (
                 <Text color={theme.COLORS.MUTED} size={13}>
                   <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
@@ -57,7 +69,7 @@ class Product extends React.Component {
   }
 }
 
-export default withNavigation(Product);
+export default withNavigation(CompanyProduct);
 
 const styles = StyleSheet.create({
   product: {
@@ -96,8 +108,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.1,
     elevation: 2,
-  },
-  seller: {
-    marginRight: theme.SIZES.BASE / 2,
   },
 });
