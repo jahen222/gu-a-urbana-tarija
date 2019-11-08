@@ -10,7 +10,6 @@ import Menu from './Menu';
 //Screens
 import HomeScreen from '../screens/Home';
 import SearchScreen from '../screens/SearchScreen';
-import NotificationScreen from '../screens/NotificationScreen';
 
 import CompaniesScreen from '../screens/companies/CompaniesScreen';
 import CompanyCategoriesScreen from '../screens/companies/CompanyCategoriesScreen';
@@ -84,12 +83,6 @@ const ScreenStack = createStackNavigator({
     screen: SearchScreen,
     navigationOptions: ({navigation}) => ({
       header: <Header title="Buscar" navigation={navigation} />,
-    })
-  },
-  Notification: {
-    screen: NotificationScreen,
-    navigationOptions: ({navigation}) => ({
-      header: <Header title="Notificaciónes" navigation={navigation} />,
     })
   },
   Companies: {
@@ -228,12 +221,6 @@ const drawerNavigator = createDrawerNavigator(
       }
     },
     Search: {
-      screen: ScreenStack,
-      navigationOptions: {
-        drawerLabel: <Hidden />,
-      },
-    },
-    Notification: {
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: <Hidden />,
