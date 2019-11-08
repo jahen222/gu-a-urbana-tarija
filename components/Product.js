@@ -41,6 +41,9 @@ class Product extends React.Component {
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
             <Text>
+              {'Turismo'}
+            </Text>
+            <Text>
               {product.address ? (
                 <Text color={theme.COLORS.MUTED} size={13}>
                   <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />

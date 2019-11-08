@@ -10,6 +10,7 @@ import Menu from './Menu';
 //Screens
 import HomeScreen from '../screens/Home';
 import SearchScreen from '../screens/SearchScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 
 import CompaniesScreen from '../screens/companies/CompaniesScreen';
 import CompanyCategoriesScreen from '../screens/companies/CompanyCategoriesScreen';
@@ -76,13 +77,19 @@ const ScreenStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: ({navigation}) => ({
-      header: <Header search title="Home" navigation={navigation} />,
+      header: <Header search nav title="Home" navigation={navigation} />,
     })
   },
   Search: {
     screen: SearchScreen,
     navigationOptions: ({navigation}) => ({
-      header: <Header title="Search" navigation={navigation} />,
+      header: <Header title="Buscar" navigation={navigation} />,
+    })
+  },
+  Notification: {
+    screen: NotificationScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header title="Notificaciónes" navigation={navigation} />,
     })
   },
   Companies: {
@@ -206,6 +213,12 @@ const ScreenStack = createStackNavigator({
 
 const drawerNavigator = createDrawerNavigator(
   {
+    Profile: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
     Home: {
       screen: ScreenStack,
       navigationOptions: {
@@ -215,6 +228,12 @@ const drawerNavigator = createDrawerNavigator(
       }
     },
     Search: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    Notification: {
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: <Hidden />,
@@ -320,12 +339,6 @@ const drawerNavigator = createDrawerNavigator(
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: () => <Block style={{marginVertical: 8}}><Text>{` `}</Text></Block>,
-      },
-    },
-    Profile: {
-      screen: ScreenStack,
-      navigationOptions: {
-        drawerLabel: <Hidden />,
       },
     },
     Logout: {

@@ -41,7 +41,7 @@ class Route extends React.Component {
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
             <Text>
-              {detail}
+              {'Ruta'}
             </Text>
             <Text>
               {product.address ? (

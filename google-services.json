@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "767257686012",
+    "firebase_url": "https://gutarija-1b02a.firebaseio.com",
+    "project_id": "gutarija-1b02a",
+    "storage_bucket": "gutarija-1b02a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767257686012:android:0812ab7521543feacacc79",
+        "android_client_info": {
+          "package_name": "com.jahen.gut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767257686012-14fr9154j884sgqh8m2q547mar17tm29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXVqzOJP1ScBNUAmWQhQnk0asxQsGvNJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767257686012-14fr9154j884sgqh8m2q547mar17tm29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

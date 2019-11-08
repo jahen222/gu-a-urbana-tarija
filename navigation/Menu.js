@@ -4,6 +4,7 @@ import { TouchableWithoutFeedback, ScrollView, StyleSheet, Dimensions, Image } f
 import { Block, Text, theme } from "galio-framework";
 import { Icon } from '../components/';
 import { Images, materialTheme } from "../constants/";
+import Firebase, { db } from '../config/Firebase.js';
 
 const { width } = Dimensions.get('screen');
 
@@ -24,13 +25,33 @@ const Drawer = (props) => (
   </Block>
 );
 
-const profile = {
-  avatar: Images.Profile,
-  name: 'henryjaimes.peli@gmail.com',
-  type: 'Seller',
-  plan: 'Pro',
-  rating: 4.8
+var profile = {
+  avatar: '',
+  name: '',
+  type: '',
+  plan: '',
+  rating: 0
 };
+
+Firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    profile = {
+      avatar: Images.Profile,
+      name: user.email,
+      type: 'Seller',
+      plan: 'Pro',
+      rating: 4.8
+    }
+  } else {
+    profile = {
+      avatar: Images.Profile,
+      name: 'indefinido',
+      type: 'Seller',
+      plan: 'Pro',
+      rating: 4.8
+    }
+  }
+});
 
 const Menu = {
   contentComponent: props => <Drawer {...props} profile={profile}/>,

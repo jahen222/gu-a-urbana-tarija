@@ -1,13 +1,157 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product } from '../components/';
+import { Icon, Product, Route, CompanyProduct } from '../components/';
 import products from '../constants/products';
-import Firebase, { db } from '../config/Firebase.js';
+import Firebase, { db, storage } from '../config/Firebase.js';
 
 const { width } = Dimensions.get('screen');
 
 export default class Home extends React.Component {
+  state = {
+    companies: [],
+    tourism: [],
+    routes: []
+  };
+
+  componentDidMount = () => {
+    const allCompanies = db.collection('companies').get()
+    .then(querySnapshot => {
+      const companies = [];
+      querySnapshot.forEach(doc => {
+        companies.push({
+          id: doc.id,
+          name: doc.data().name,
+          address: doc.data().address,
+          image: doc.data().image,
+          phone: doc.data().phone,
+          workingHours: doc.data().workingHours,
+          email: doc.data().email,
+          facebook: doc.data().facebook,
+          instagram: doc.data().instagram,
+          twiteer: doc.data().twiteer,
+          web: doc.data().web,
+          map: doc.data().map,
+          whatsapp: doc.data().whatsapp,
+          review: doc.data().review,
+          photo1: doc.data().photo1,
+          photo2: doc.data().photo2,
+          photo3: doc.data().photo3,
+          photo4: doc.data().photo4,
+          photo5: doc.data().photo5,
+          photo6: doc.data().photo6,
+          photo7: doc.data().photo7,
+          photo8: doc.data().photo8,
+          photo9: doc.data().photo9,
+          product1: doc.data().product1,
+          product2: doc.data().product2,
+          product3: doc.data().product3,
+          product4: doc.data().product4,
+          product5: doc.data().product5,
+          product6: doc.data().product6,
+          product7: doc.data().product7,
+          product8: doc.data().product8,
+          photo9: doc.data().photo9,
+          categoryId: doc.data().categoryId,
+          stars: doc.data().stars
+        });
+      });
+      this.setState({ companies });
+    })
+    .catch(e => {
+      alert(e);
+    });
+    const allTourism = db.collection('tourism').get()
+    .then(querySnapshot => {
+      const tourism = [];
+      querySnapshot.forEach(doc => {
+        tourism.push({
+          id: doc.id,
+          name: doc.data().name,
+          address: doc.data().address,
+          image: doc.data().image,
+          phone: doc.data().phone,
+          workingHours: doc.data().workingHours,
+          email: doc.data().email,
+          facebook: doc.data().facebook,
+          instagram: doc.data().instagram,
+          twiteer: doc.data().twiteer,
+          web: doc.data().web,
+          map: doc.data().map,
+          whatsapp: doc.data().whatsapp,
+          review: doc.data().review,
+          photo1: doc.data().photo1,
+          photo2: doc.data().photo2,
+          photo3: doc.data().photo3,
+          photo4: doc.data().photo4,
+          photo5: doc.data().photo5,
+          photo6: doc.data().photo6,
+          photo7: doc.data().photo7,
+          photo8: doc.data().photo8,
+          photo9: doc.data().photo9,
+          product1: doc.data().product1,
+          product2: doc.data().product2,
+          product3: doc.data().product3,
+          product4: doc.data().product4,
+          product5: doc.data().product5,
+          product6: doc.data().product6,
+          product7: doc.data().product7,
+          product8: doc.data().product8,
+          photo9: doc.data().photo9,
+          categoryId: doc.data().type,
+        });
+      });
+      this.setState({ tourism });
+    })
+    .catch(e => {
+      alert(e);
+    });
+    const allRoutes = db.collection('routes').get()
+    .then(querySnapshot => {
+      const routes = [];
+      querySnapshot.forEach(doc => {
+        routes.push({
+          id: doc.id,
+          name: doc.data().name,
+          address: doc.data().address,
+          image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
+          phone: doc.data().phone,
+          workingHours: doc.data().workingHours,
+          email: doc.data().email,
+          facebook: doc.data().facebook,
+          instagram: doc.data().instagram,
+          twiteer: doc.data().twiteer,
+          web: doc.data().web,
+          map: doc.data().map,
+          whatsapp: doc.data().whatsapp,
+          review: doc.data().review,
+          photo1: doc.data().photo1,
+          photo2: doc.data().photo2,
+          photo3: doc.data().photo3,
+          photo4: doc.data().photo4,
+          photo5: doc.data().photo5,
+          photo6: doc.data().photo6,
+          photo7: doc.data().photo7,
+          photo8: doc.data().photo8,
+          photo9: doc.data().photo9,
+          product1: doc.data().product1,
+          product2: doc.data().product2,
+          product3: doc.data().product3,
+          product4: doc.data().product4,
+          product5: doc.data().product5,
+          product6: doc.data().product6,
+          product7: doc.data().product7,
+          product8: doc.data().product8,
+          photo9: doc.data().photo9,
+          categoryId: doc.data().categoryId,
+        });
+      });
+      this.setState({ routes });
+    })
+    .catch(e => {
+      alert(e);
+    });
+  };
 
   renderProducts = () => {
     return (
@@ -15,13 +159,21 @@ export default class Home extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <Product product={products[0]} horizontal />
-          <Block flex row>
-            <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Product product={products[2]} />
-          </Block>
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} full />
+          {this.state.companies.map(product => {
+            return (
+              <CompanyProduct key={product.id} product={product} detail='company' horizontal />
+            );
+          })}
+          {this.state.tourism.map(product => {
+            return (
+              <Product key={product.id} product={product} detail='tourism' horizontal />
+            );
+          })}
+          {this.state.routes.map(product => {
+            return (
+              <Route key={product.id} product={product} detail='routes' horizontal />
+            );
+          })}
         </Block>
       </ScrollView>
     )
@@ -30,6 +182,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
+        {this.renderProducts()}
       </Block>
     );
   }

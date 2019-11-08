@@ -41,7 +41,7 @@ class CompanyProduct extends React.Component {
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
             <Text>
-              {detail}
+              {'Empresa'}
             </Text>
             <Text>
               {product.stars ? (

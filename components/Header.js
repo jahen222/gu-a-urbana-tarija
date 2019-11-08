@@ -22,12 +22,12 @@ const ChatButton = ({isWhite, style, navigation}) => (
 );
 
 const BasketButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Notification')}>
     <Icon
-      family="GalioExtra"
+      family="feather"
       size={16}
-      name="basket-simple"
-      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
+      name="alert-circle"
+      color={theme.COLORS[isWhite ? 'WHITE' : 'WHITE']}
     />
     <Block middle style={styles.notify} />
   </TouchableOpacity>
@@ -57,53 +57,22 @@ class Header extends React.Component {
     const { white, title, navigation } = this.props;
     const { routeName } = navigation.state;
 
-    if (title === 'Title') {
-      return [
-        <ChatButton key='chat-title' navigation={navigation} isWhite={white} />,
-        <BasketButton key='basket-title' navigation={navigation} isWhite={white} />
-      ]
-    }
-
     switch (routeName) {
       case 'Home':
         return ([
-          <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+          <BasketButton key='basket1' navigation={navigation} isWhite={white} />
         ]);
-      case 'Deals':
+      case 'Companies':
         return ([
-          <ChatButton key='chat-categories' navigation={navigation} />,
-          <BasketButton key='basket-categories' navigation={navigation} />
+          <BasketButton key='basket2' navigation={navigation} isWhite={white} />
         ]);
-      case 'Categories':
+      case 'Routes':
         return ([
-          <ChatButton key='chat-categories' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
+          <BasketButton key='basket3' navigation={navigation} isWhite={white} />
         ]);
-      case 'Category':
+      case 'Tourism':
         return ([
-          <ChatButton key='chat-deals' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Profile':
-        return ([
-          <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Product':
-        return ([
-          <SearchButton key='search-product' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-product' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Search':
-        return ([
-          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Settings':
-        return ([
-          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
+          <BasketButton key='basket4' navigation={navigation} isWhite={white} />
         ]);
       default:
         break;
@@ -145,7 +114,7 @@ class Header extends React.Component {
 
     return (
       <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('TourismSearch', { category: "ciudad" })}>
+        <Button shadowless style={[styles.tab]} onPress={() => navigation.navigate('TourismSearch', { category: "ciudad" })}>
           <Block row middle>
             <Icon name="home" family="feather" style={{ paddingRight: 8, color: 'white' }} />
             <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Ciudad'}</Text>
@@ -161,14 +130,42 @@ class Header extends React.Component {
     )
   }
 
+  renderNav = () => {
+    const { navigation, tabTitleLeft, tabTitleRight } = this.props;
+
+    return (
+      <Block row style={styles.tabs2}>
+        <Button shadowless style={[styles.tab]} onPress={() => navigation.navigate('Companies')}>
+          <Block row middle>
+            <Icon name="briefcase" family="feather" style={{ paddingRight: 8, color: 'white' }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Empresas'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Tourism')}>
+          <Block row middle>
+            <Icon name="camera" family="feather" style={{ paddingRight: 8, color: 'white' }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Turismo'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Routes')}>
+          <Block row middle>
+            <Icon name="map" family="feather" style={{ paddingRight: 8, color: 'white' }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Rutas'}</Text>
+          </Block>
+        </Button>
+      </Block>
+    )
+  }
+
   renderHeader = () => {
-    const { search, tabs, tourism } = this.props;
-    if (search || tabs || tourism) {
+    const { search, tabs, tourism, nav } = this.props;
+    if (search || tabs || tourism || nav) {
       return (
         <Block center style={{ backgroundColor: "#3b6dc7" }}>
           {search ? this.renderSearch() : null}
           {tabs ? this.renderTabs() : null}
           {tourism ? this.renderTourism() : null}
+          {nav ? this.renderNav() : null}
         </Block>
       )
     }
@@ -263,9 +260,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     elevation: 4,
   },
+  tabs2: {
+    marginBottom: 24,
+    marginTop: 10,
+    elevation: 4,
+  },
   tab: {
     backgroundColor: theme.COLORS.TRANSPARENT,
-    width: width * 0.50,
+    width: width * 0.33,
     borderRadius: 0,
     borderWidth: 0,
     height: 24,

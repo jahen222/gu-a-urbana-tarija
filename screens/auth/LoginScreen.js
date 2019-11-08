@@ -69,7 +69,8 @@ class LoginScreen extends React.Component {
                 <Block center>
                   <Input
                     placeholder="Email"
-                    value={this.state.email}
+                    value={this.state.email.trim()}
+                    email
                     onChangeText={email => this.setState({ email })}
                     placeholderTextColor={materialTheme.COLORS.BLACK}
                     style={{ borderRadius: 6, borderColor: materialTheme.COLORS.BLACK }}

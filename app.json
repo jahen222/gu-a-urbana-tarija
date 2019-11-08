@@ -27,7 +27,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.jahen.gut"
+      "package": "com.jahen.gut",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

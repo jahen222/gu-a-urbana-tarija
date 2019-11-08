@@ -1,14 +1,20 @@
-import { AppLoading } from 'expo';
+import { AppLoading, Notifications } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -27,6 +33,31 @@ export default function App(props) {
     );
   }
 }
+
+async function registerForPushNotificationsAsync() {
+  const [expoPushToken, setExpoPushToken] = useState(false);
+
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(
+        Permissions.NOTIFICATIONS
+      );
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    let token = await Notifications.getExpoPushTokenAsync();
+    setExpoPushToken(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+};
 
 async function loadResourcesAsync() {
   await Promise.all([

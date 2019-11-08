@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product, Route } from '../components/';
+import { Icon, Product, Route, CompanyProduct } from '../components/';
 import products from '../constants/products';
 import Firebase, { db, storage } from '../config/Firebase.js';
 
@@ -20,8 +20,8 @@ export default class Search extends React.Component {
     .then(querySnapshot => {
       const companies = [];
       querySnapshot.forEach(doc => {
-        var str = String(doc.data().name);
-        var flag = str.includes(String(search));
+        var str = String(doc.data().name).toUpperCase();
+        var flag = str.includes(String(search).toUpperCase());
         if (flag) {
           companies.push({
             id: doc.id,
@@ -57,6 +57,7 @@ export default class Search extends React.Component {
             product8: doc.data().product8,
             photo9: doc.data().photo9,
             categoryId: doc.data().categoryId,
+            stars: doc.data().stars,
           });
         }
       });
@@ -69,41 +70,45 @@ export default class Search extends React.Component {
     .then(querySnapshot => {
       const tourism = [];
       querySnapshot.forEach(doc => {
-        tourism.push({
-          id: doc.id,
-          name: doc.data().name,
-          address: doc.data().address,
-          image: doc.data().image,
-          phone: doc.data().phone,
-          workingHours: doc.data().workingHours,
-          email: doc.data().email,
-          facebook: doc.data().facebook,
-          instagram: doc.data().instagram,
-          twiteer: doc.data().twiteer,
-          web: doc.data().web,
-          map: doc.data().map,
-          whatsapp: doc.data().whatsapp,
-          review: doc.data().review,
-          photo1: doc.data().photo1,
-          photo2: doc.data().photo2,
-          photo3: doc.data().photo3,
-          photo4: doc.data().photo4,
-          photo5: doc.data().photo5,
-          photo6: doc.data().photo6,
-          photo7: doc.data().photo7,
-          photo8: doc.data().photo8,
-          photo9: doc.data().photo9,
-          product1: doc.data().product1,
-          product2: doc.data().product2,
-          product3: doc.data().product3,
-          product4: doc.data().product4,
-          product5: doc.data().product5,
-          product6: doc.data().product6,
-          product7: doc.data().product7,
-          product8: doc.data().product8,
-          photo9: doc.data().photo9,
-          categoryId: doc.data().type,
-        });
+        var str = String(doc.data().name).toUpperCase();
+        var flag = str.includes(String(search).toUpperCase());
+        if (flag) {
+          tourism.push({
+            id: doc.id,
+            name: doc.data().name,
+            address: doc.data().address,
+            image: doc.data().image,
+            phone: doc.data().phone,
+            workingHours: doc.data().workingHours,
+            email: doc.data().email,
+            facebook: doc.data().facebook,
+            instagram: doc.data().instagram,
+            twiteer: doc.data().twiteer,
+            web: doc.data().web,
+            map: doc.data().map,
+            whatsapp: doc.data().whatsapp,
+            review: doc.data().review,
+            photo1: doc.data().photo1,
+            photo2: doc.data().photo2,
+            photo3: doc.data().photo3,
+            photo4: doc.data().photo4,
+            photo5: doc.data().photo5,
+            photo6: doc.data().photo6,
+            photo7: doc.data().photo7,
+            photo8: doc.data().photo8,
+            photo9: doc.data().photo9,
+            product1: doc.data().product1,
+            product2: doc.data().product2,
+            product3: doc.data().product3,
+            product4: doc.data().product4,
+            product5: doc.data().product5,
+            product6: doc.data().product6,
+            product7: doc.data().product7,
+            product8: doc.data().product8,
+            photo9: doc.data().photo9,
+            categoryId: doc.data().type,
+          });
+        }
       });
       this.setState({ tourism });
     })
@@ -114,41 +119,45 @@ export default class Search extends React.Component {
     .then(querySnapshot => {
       const routes = [];
       querySnapshot.forEach(doc => {
-        routes.push({
-          id: doc.id,
-          name: doc.data().name,
-          address: doc.data().address,
-          image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
-          phone: doc.data().phone,
-          workingHours: doc.data().workingHours,
-          email: doc.data().email,
-          facebook: doc.data().facebook,
-          instagram: doc.data().instagram,
-          twiteer: doc.data().twiteer,
-          web: doc.data().web,
-          map: doc.data().map,
-          whatsapp: doc.data().whatsapp,
-          review: doc.data().review,
-          photo1: doc.data().photo1,
-          photo2: doc.data().photo2,
-          photo3: doc.data().photo3,
-          photo4: doc.data().photo4,
-          photo5: doc.data().photo5,
-          photo6: doc.data().photo6,
-          photo7: doc.data().photo7,
-          photo8: doc.data().photo8,
-          photo9: doc.data().photo9,
-          product1: doc.data().product1,
-          product2: doc.data().product2,
-          product3: doc.data().product3,
-          product4: doc.data().product4,
-          product5: doc.data().product5,
-          product6: doc.data().product6,
-          product7: doc.data().product7,
-          product8: doc.data().product8,
-          photo9: doc.data().photo9,
-          categoryId: doc.data().categoryId,
-        });
+        var str = String(doc.data().name).toUpperCase();
+        var flag = str.includes(String(search).toUpperCase());
+        if (flag) {
+          routes.push({
+            id: doc.id,
+            name: doc.data().name,
+            address: doc.data().address,
+            image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
+            phone: doc.data().phone,
+            workingHours: doc.data().workingHours,
+            email: doc.data().email,
+            facebook: doc.data().facebook,
+            instagram: doc.data().instagram,
+            twiteer: doc.data().twiteer,
+            web: doc.data().web,
+            map: doc.data().map,
+            whatsapp: doc.data().whatsapp,
+            review: doc.data().review,
+            photo1: doc.data().photo1,
+            photo2: doc.data().photo2,
+            photo3: doc.data().photo3,
+            photo4: doc.data().photo4,
+            photo5: doc.data().photo5,
+            photo6: doc.data().photo6,
+            photo7: doc.data().photo7,
+            photo8: doc.data().photo8,
+            photo9: doc.data().photo9,
+            product1: doc.data().product1,
+            product2: doc.data().product2,
+            product3: doc.data().product3,
+            product4: doc.data().product4,
+            product5: doc.data().product5,
+            product6: doc.data().product6,
+            product7: doc.data().product7,
+            product8: doc.data().product8,
+            photo9: doc.data().photo9,
+            categoryId: doc.data().categoryId,
+          });
+        }
       });
       this.setState({ routes });
     })
@@ -165,7 +174,7 @@ export default class Search extends React.Component {
         <Block flex>
           {this.state.companies.map(product => {
             return (
-              <Product key={product.id} product={product} detail='company' horizontal />
+              <CompanyProduct key={product.id} product={product} detail='company' horizontal />
             );
           })}
           {this.state.tourism.map(product => {

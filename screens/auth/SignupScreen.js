@@ -5,23 +5,29 @@ import { Block, Button, Text, Input, theme } from 'galio-framework';
 import materialTheme from '../../constants/Theme';
 import Images from '../../constants/Images';
 import { Select, Icon, Header, Product, Switch } from '../../components/';
+import { AppLoading, Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 const { height, width } = Dimensions.get('screen');
 
 class SignupScreen extends React.Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        expoPushToken: ''
     };
 
     handleSignUp = async () => {
         try {
             const { email, password } = this.state;
             const response = await Firebase.auth().createUserWithEmailAndPassword(email, password);
+            const token = await Notifications.getExpoPushTokenAsync();
             if (response.user.uid) {
                 const user = {
                     uid: response.user.uid,
-                    email: email
+                    email: email,
+                    expoPushToken: token
                 }
                 db.collection('users').doc(response.user.uid).set(user);
                 this.props.navigation.navigate('Drawer');
@@ -53,6 +59,7 @@ class SignupScreen extends React.Component {
                     placeholder="Email"
                     value={this.state.email}
                     onChangeText={email => this.setState({ email })}
+                    email
                     placeholderTextColor={materialTheme.COLORS.BLACK}
                     style={{ borderRadius: 3, borderColor: materialTheme.COLORS.BLACK }}
                   />
