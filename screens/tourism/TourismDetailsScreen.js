@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking, Share} from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import Firebase, { db, storage } from '../../config/Firebase.js';
@@ -57,6 +57,40 @@ export default class TourismDetail extends React.Component {
       alert(e);
     });
   };
+
+  _shareMessage(name, review) {
+    Share.share({
+      message: 'Lugar: '+name+' '+review,
+      title: name
+    })
+    .then(this._showResult)
+    .catch((error) => this.setState({result: 'error: ' + error.message}));
+  }
+
+  _shareText(name, review, map) {
+    Share.share({
+      message: 'Lugar: '+name+' '+review+' ubicación: '+map,
+      url: map,
+      title: name
+    }, {
+      dialogTitle: 'Compartir',
+      tintColor: 'green'
+    })
+    .then(this._showResult)
+    .catch((error) => this.setState({result: 'error: ' + error.message}));
+  }
+
+  _showResult(result) {
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        this.setState({result: 'shared with an activityType: ' + result.activityType});
+      } else {
+        this.setState({result: 'shared'});
+      }
+    } else if (result.action === Share.dismissedAction) {
+      this.setState({result: 'dismissed'});
+    }
+  }
 
   componentDidMount = () => {
     const { product } = this.props.navigation.state.params;
@@ -254,6 +288,20 @@ export default class TourismDetail extends React.Component {
             <Block row space="around" style={{ padding: theme.SIZES.BASE, }}>
               <Block middle>
                 <Text muted size={12}>{this.state.review}</Text>
+              </Block>
+            </Block>
+            <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
+              <Block middle>
+                <Icon name="heart" family="font-awesome" color={theme.COLORS.MUTED} size={24}/>
+                <Text muted size={12}>Me gusta</Text>
+              </Block>
+              <Block middle>
+                <Icon name="share-alt" family="font-awesome" color={theme.COLORS.MUTED} size={24} onPress={() => this.state.map==undefined?this._shareMessage(this.state.name, this.state.review):this._shareText(this.state.name, this.state.review, this.state.map)}/>
+                <Text muted size={12}>Compartir</Text>
+              </Block>
+              <Block middle>
+                <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={24} onPress={() => this.state.map==undefined?'':navigation.navigate('TourismMap',{map:this.state.map}) }/>
+                <Text muted size={12}>Ver mapa</Text>
               </Block>
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>

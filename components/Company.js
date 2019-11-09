@@ -28,7 +28,11 @@ class CompanyProduct extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    this.getLink(product.image);
+    if (product.image == undefined || product.image == null || product.image == "")
+      this.getLink("404.jpg");
+    else {
+      this.getLink(product.image);
+    }
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>

@@ -38,7 +38,7 @@ class LoginScreen extends React.Component {
     handleLogin = async () => {
         try {
             const { email, password } = this.state;
-            const response = await Firebase.auth().signInWithEmailAndPassword(email, password);
+            const response = await Firebase.auth().signInWithEmailAndPassword(email.trim(), password);
             if (response) {
                 if (this.getUser(response.user.uid) != null) {
                     this.props.navigation.navigate('Drawer');

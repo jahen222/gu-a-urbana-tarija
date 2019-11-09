@@ -21,12 +21,12 @@ class SignupScreen extends React.Component {
     handleSignUp = async () => {
         try {
             const { email, password } = this.state;
-            const response = await Firebase.auth().createUserWithEmailAndPassword(email, password);
+            const response = await Firebase.auth().createUserWithEmailAndPassword(email.trim(), password);
             const token = await Notifications.getExpoPushTokenAsync();
             if (response.user.uid) {
                 const user = {
                     uid: response.user.uid,
-                    email: email,
+                    email: email.trim(),
                     expoPushToken: token
                 }
                 db.collection('users').doc(response.user.uid).set(user);
@@ -57,7 +57,7 @@ class SignupScreen extends React.Component {
                 <Block center>
                   <Input
                     placeholder="Email"
-                    value={this.state.email}
+                    value={this.state.email.trim()}
                     onChangeText={email => this.setState({ email })}
                     email
                     placeholderTextColor={materialTheme.COLORS.BLACK}

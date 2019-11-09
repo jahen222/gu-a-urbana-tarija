@@ -1,6 +1,6 @@
 import React from 'react';
 import { withNavigation } from 'react-navigation';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Share, Button, View, TouchableHighlight } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import Firebase, { storage } from '../config/Firebase.js';
 import materialTheme from '../constants/Theme';
@@ -28,7 +28,11 @@ class Product extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    this.getLink(product.image);
+    if (product.image == undefined || product.image == null || product.image == "")
+      this.getLink("404.jpg");
+    else {
+      this.getLink(product.image);
+    }
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
