@@ -147,10 +147,10 @@ class Header extends React.Component {
             <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Turismo'}</Text>
           </Block>
         </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Routes')}>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Events')}>
           <Block row middle>
-            <Icon name="map" family="feather" style={{ paddingRight: 8, color: 'white' }} />
-            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Rutas'}</Text>
+            <Icon name="calendar" family="feather" style={{ paddingRight: 8, color: 'white' }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Eventos'}</Text>
           </Block>
         </Button>
       </Block>

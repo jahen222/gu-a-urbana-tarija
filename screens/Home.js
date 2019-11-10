@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-import { Icon, Product, Route, CompanyProduct } from '../components/';
+import { Icon, Product, EventProduct, CompanyProduct } from '../components/';
 import products from '../constants/products';
 import Firebase, { db, storage } from '../config/Firebase.js';
 
@@ -106,7 +106,7 @@ export default class Home extends React.Component {
     .catch(e => {
       alert(e);
     });
-    const allRoutes = db.collection('routes').get()
+    const allRoutes = db.collection('events').get()
     .then(querySnapshot => {
       const routes = [];
       querySnapshot.forEach(doc => {
@@ -114,7 +114,7 @@ export default class Home extends React.Component {
           id: doc.id,
           name: doc.data().name,
           address: doc.data().address,
-          image: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg',
+          image: doc.data().image,
           phone: doc.data().phone,
           workingHours: doc.data().workingHours,
           email: doc.data().email,
@@ -171,7 +171,7 @@ export default class Home extends React.Component {
           })}
           {this.state.routes.map(product => {
             return (
-              <Route key={product.id} product={product} detail='routes' horizontal />
+              <EventProduct key={product.id} product={product} detail='event' horizontal />
             );
           })}
         </Block>

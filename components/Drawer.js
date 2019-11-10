@@ -21,24 +21,32 @@ class DrawerItem extends React.Component {
         return (
           <Icon
             size={16}
-            name="shop"
-            family="GalioExtra"
+            name="briefcase"
+            family="feather"
             color={materialTheme.COLORS.MUTED} />
         );
       case 'Tourism':
         return (
           <Icon
             size={16}
-            name="aircraft"
-            family="entypo"
+            name="camera"
+            family="feather"
             color={materialTheme.COLORS.MUTED} />
         );
       case 'Routes':
         return (
           <Icon
             size={16}
-            name="shuffle"
-            family="entypo"
+            name="map"
+            family="feather"
+            color={materialTheme.COLORS.MUTED} />
+        );
+      case 'Events':
+        return (
+          <Icon
+            size={16}
+            name="calendar"
+            family="feather"
             color={materialTheme.COLORS.MUTED} />
         );
       case 'Profile':

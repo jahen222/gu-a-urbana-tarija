@@ -8,9 +8,9 @@ import Icon from './Icon';
 
 const { width } = Dimensions.get('screen');
 
-class Route extends React.Component {
+class EventProduct extends React.Component {
   state = {
-    url: 'https://estaticos.expansion.com/assets/multimedia/imagenes/2016/02/12/14552994362190.jpg'
+    url: ''
   };
 
   getLink = async (image) => {
@@ -62,20 +62,24 @@ class Route extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle, detail } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    //this.getLink(product.image);
+    if (product.image == undefined || product.image == null || product.image == "")
+      this.getLink("404.jpg");
+    else {
+      this.getLink(product.image);
+    }
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
+        <TouchableWithoutFeedback onPress={ ()=> navigation.navigate('EventDetails', {product: product}) }>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: this.state.url }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={detail=="company"?()=>{navigation.navigate('CompanyDetails', {product: product})}:detail=="tourism"?()=>{navigation.navigate('TourismDetails', {product: product})}:()=>{navigation.navigate('RoutesDetails', {product: product})}}>
+        <TouchableWithoutFeedback onPress={ ()=> navigation.navigate('EventDetails', {product: product}) }>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.name}</Text>
             <Text>
-              {'Ruta'}
+              {'Evento'}
             </Text>
             <Text>
               {product.address ? (
@@ -95,7 +99,7 @@ class Route extends React.Component {
             <Text muted size={12}>Compartir</Text>
           </Block>
           <Block middle>
-            <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={24} onPress={() => product.map==undefined?'':navigation.navigate('RouteMap',{map:product.map}) }/>
+            <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={24} onPress={() => product.map==undefined?'':navigation.navigate('EventMap',{map:product.map}) }/>
             <Text muted size={12}>Ver mapa</Text>
           </Block>
         </Block>
@@ -104,7 +108,7 @@ class Route extends React.Component {
   }
 }
 
-export default withNavigation(Route);
+export default withNavigation(EventProduct);
 
 const styles = StyleSheet.create({
   product: {
@@ -143,5 +147,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.1,
     elevation: 2,
+  },
+  seller: {
+    marginRight: theme.SIZES.BASE / 2,
   },
 });

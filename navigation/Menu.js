@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   profile: {
-    marginBottom: theme.SIZES.BASE / 2,
+    //marginBottom: theme.SIZES.BASE / 2,
+    paddingTop: 20,
   },
   avatar: {
     height: 40,

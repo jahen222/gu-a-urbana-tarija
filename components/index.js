@@ -10,6 +10,7 @@ import Photo from './Photo';
 import Category from './Category';
 import Route from './Route';
 import CompanyProduct from './Company';
+import EventProduct from './Event';
 
 export {
   Button,
@@ -23,5 +24,6 @@ export {
   Photo,
   Category,
   Route,
-  CompanyProduct
+  CompanyProduct,
+  EventProduct
 };

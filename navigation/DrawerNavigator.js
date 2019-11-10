@@ -18,16 +18,19 @@ import CompanyMapScreen from '../screens/companies/CompanyMapScreen';
 import CompanySearchScreen from '../screens/companies/CompanySearchScreen';
 
 import TourismScreen from '../screens/tourism/TourismScreen';
-import TourismCategoriesScreen from '../screens/tourism/TourismCategoriesScreen';
 import TourismDetailsScreen from '../screens/tourism/TourismDetailsScreen';
 import TourismMapScreen from '../screens/tourism/TourismMapScreen';
 import TourismSearchScreen from '../screens/tourism/TourismSearchScreen';
 
 import RoutesScreen from '../screens/routes/RoutesScreen';
-import RoutesCategoriesScreen from '../screens/routes/RoutesCategoriesScreen';
 import RoutesDetailsScreen from '../screens/routes/RoutesDetailsScreen';
 import RoutesMapScreen from '../screens/routes/RoutesMapScreen';
 import RoutesSearchScreen from '../screens/routes/RoutesSearchScreen';
+
+import EventScreen from '../screens/events/EventScreen';
+import EventDetailsScreen from '../screens/events/EventDetailsScreen';
+import EventMapScreen from '../screens/events/EventMapScreen';
+import EventSearchScreen from '../screens/events/EventSearchScreen';
 
 import LogoutScreen from '../screens/auth/LogoutScreen';
 
@@ -125,13 +128,6 @@ const ScreenStack = createStackNavigator({
       header: <Header search tourism title="Turismo" navigation={navigation} />,
     })
   },
-  TourismCategories: {
-    screen: TourismCategoriesScreen,
-    navigationOptions: ({ navigation }) => ({
-      header: <Header title="Categorias de Turismo" navigation={navigation} />,
-      headerTransparent: true,
-    })
-  },
   TourismDetails: {
     screen: TourismDetailsScreen,
     navigationOptions: ({ navigation }) => ({
@@ -159,13 +155,6 @@ const ScreenStack = createStackNavigator({
       header: <Header search title="Rutas" navigation={navigation} />,
     })
   },
-  RoutesCategories: {
-    screen: RoutesCategoriesScreen,
-    navigationOptions: ({ navigation }) => ({
-      header: <Header title="Categorias de Rutas" navigation={navigation} />,
-      headerTransparent: true,
-    })
-  },
   RoutesDetails: {
     screen: RoutesDetailsScreen,
     navigationOptions: ({ navigation }) => ({
@@ -182,6 +171,33 @@ const ScreenStack = createStackNavigator({
   },
   RoutesSearch: {
     screen: RoutesSearchScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Busqueda" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  Events: {
+    screen: EventScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <Header search title="Eventos" navigation={navigation} />,
+    })
+  },
+  EventDetails: {
+    screen: EventDetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header white transparent title="Detalles Evento" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  EventMap: {
+    screen: EventMapScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Mapa Evento" navigation={navigation} />,
+      headerTransparent: true,
+    })
+  },
+  EventSearch: {
+    screen: EventSearchScreen,
     navigationOptions: ({ navigation }) => ({
       header: <Header title="Busqueda" navigation={navigation} />,
       headerTransparent: true,
@@ -266,12 +282,6 @@ const drawerNavigator = createDrawerNavigator(
         ),
       }),
     },
-    TourismCategories: {
-      screen: ScreenStack,
-      navigationOptions: {
-        drawerLabel: <Hidden />,
-      },
-    },
     TourismDetails: {
       screen: ScreenStack,
       navigationOptions: {
@@ -298,12 +308,6 @@ const drawerNavigator = createDrawerNavigator(
         ),
       }),
     },
-    RoutesCategories: {
-      screen: ScreenStack,
-      navigationOptions: {
-        drawerLabel: <Hidden />,
-      },
-    },
     RoutesDetails: {
       screen: ScreenStack,
       navigationOptions: {
@@ -317,6 +321,32 @@ const drawerNavigator = createDrawerNavigator(
       },
     },
     RoutesSearch: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    Events: {
+      screen: ScreenStack,
+      navigationOptions: (navOpt) => ({
+        drawerLabel: ({focused}) => (
+          <Drawer focused={focused} screen="Events" title="Eventos" />
+        ),
+      }),
+    },
+    EventDetails: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    EventMap: {
+      screen: ScreenStack,
+      navigationOptions: {
+        drawerLabel: <Hidden />,
+      },
+    },
+    EventSearch: {
       screen: ScreenStack,
       navigationOptions: {
         drawerLabel: <Hidden />,
