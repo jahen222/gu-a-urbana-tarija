@@ -26,7 +26,7 @@ export default class CompanyDetail extends React.Component {
     web: "",
     whatsapp: "",
     review: "",
-    category: "",
+    category: ""
   };
 
   getLinks = async (product) => {
@@ -92,10 +92,58 @@ export default class CompanyDetail extends React.Component {
     }
   }
 
+  getLike = async (productId) => {
+    var user = await Firebase.auth().currentUser;
+
+    let likesRef = db.collection('likes');
+    const uid = String(user.uid);
+    let query = await likesRef.where(uid,'==',true).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        if (doc.id == productId) {
+          this.setState({ like: true })
+        }else{
+          this.setState({ like: false })
+        }
+      });
+    })
+    .catch(err => {
+      alert(err);
+    });
+  }
+
+  _handleLike = async () => {
+    var user = await Firebase.auth().currentUser;
+    let likesRef = db.collection('likes');
+    const uid = user.uid;
+    const productId = String(this.state.id);
+    var myObj = {};
+    myObj[uid] = false;
+
+    alert(JSON.parse(myObj));
+
+    if (this.state.like == true) {
+      myObj[uid] = false;
+      let setLike = likesRef.doc(productId).update({
+        myObj
+      });
+      this.setState({like: false});
+    } else {
+      myObj[uid] = true;
+      let setLike = likesRef.doc(productId).update({
+        myObj
+      });
+      this.setState({like: true});
+    }
+  }
+
   componentDidMount = () => {
     const { product } = this.props.navigation.state.params;
+
     this.getLinks(product);
+    this.getLike(product.id);
     this.setState({
+      id: product.id,
       address: product.address,
       name: product.name,
       phone: product.phone,
@@ -169,6 +217,7 @@ export default class CompanyDetail extends React.Component {
         stars: "n/a"
       });
     }
+
   };
 
   render() {
@@ -308,7 +357,7 @@ export default class CompanyDetail extends React.Component {
             </Block>
             <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
               <Block middle>
-                <Icon name="heart" family="font-awesome" color={theme.COLORS.MUTED} size={24}/>
+                {this.state.like==false?<Icon name="heart" family="feather" color={theme.COLORS.MUTED} size={24} onPress={() => this._handleLike() }/>:<Icon name="heart" family="font-awesome" color={theme.COLORS.DRIBBBLE} size={24} onPress={() => this._handleLike() }/>}
                 <Text muted size={12}>Me gusta</Text>
               </Block>
               <Block middle>
